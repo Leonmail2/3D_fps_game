@@ -11,7 +11,7 @@ export var PLAYER_SPEED = 25;
 export var MAX_SPEED = 9999;
 export var ACCELERATION = 8;
 export var DEACCELERATION = 10;
-export var gravity = -50;
+export var gravity = -50
 export var mouse_sensitivity = 0.001;
 
 var velocity = Vector3.ZERO
@@ -136,18 +136,24 @@ func _physics_process(delta):
 	get_keyboard_input()
 	if health != 0:
 		movement = get_movement_input()
-		var n = Vector3()
-		if is_on_floor():
-			velocity = lerp(velocity,movement*PLAYER_SPEED,delta*ACCELERATION)
-		
+
 		velocity.y += gravity * delta
+		if is_on_floor():
+			if velocity.x < 1.5 and velocity.x > -1.5 and velocity.z < 1.5 and velocity.z > -1.5:
+				velocity.x = 0
+				velocity.z = 0
+				velocity.y = 0
+			if movement != Vector3(0,0,0):
+				velocity = lerp(velocity,movement*PLAYER_SPEED,delta*ACCELERATION)
+			else:
+				velocity = lerp(velocity,movement*PLAYER_SPEED,delta*DEACCELERATION)
 		
-		if is_on_floor() and Input.is_key_pressed(KEY_SPACE):
-			velocity.y = 25
+		
 		
 		print(velocity)
 		velocity = move_and_slide(velocity,Vector3.UP)
-		
+		if is_on_floor() and Input.is_key_pressed(KEY_SPACE):
+			velocity.y = 25
 		
 		play_walk_anim = false
 		if movement.x != 0 or movement.z != 0:

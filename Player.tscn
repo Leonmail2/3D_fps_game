@@ -18,7 +18,8 @@ extents = Vector3( 0.75, 0.229, 0.75 )
 height = 2.04942
 
 [sub_resource type="CapsuleShape" id=3]
-height = 2.5116
+radius = 1.32258
+height = 2.19577
 
 [sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;

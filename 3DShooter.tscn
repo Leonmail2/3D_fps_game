@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://small.jpg" type="Texture" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -21,6 +21,9 @@ shader_param/dev_texture = ExtResource( 1 )
 
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
+
+[sub_resource type="PhysicsMaterial" id=10]
+friction = 10.0
 
 [sub_resource type="ConcavePolygonShape" id=4]
 data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
@@ -57,6 +60,7 @@ mesh = SubResource( 3 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="WorldGeometry/Floor"]
+physics_material_override = SubResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Floor/StaticBody"]
 shape = SubResource( 4 )
@@ -97,13 +101,33 @@ material/0 = null
 shape = SubResource( 6 )
 
 [node name="Wall4" type="MeshInstance" parent="WorldGeometry"]
-transform = Transform( -1.46674e-08, 4.11771e-08, 1, 0.942022, 0.33555, -5.23352e-16, -0.33555, 0.942022, -4.37114e-08, 8.26736, 2.20844, 40.9408 )
+transform = Transform( 5.57002e-09, -1.80629e-08, -0.432433, -0.413232, -0.127427, -1.78229e-14, 0.127427, -0.413232, 1.89023e-08, 8.26736, 0.214946, 36.6148 )
 mesh = SubResource( 5 )
 material/0 = null
 
 [node name="StaticBody2" type="StaticBody" parent="WorldGeometry/Wall4"]
 
 [node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Wall4/StaticBody2"]
+shape = SubResource( 9 )
+
+[node name="Wall5" type="MeshInstance" parent="WorldGeometry"]
+transform = Transform( 2.51892e-09, -1.87337e-08, -0.432433, -0.428576, -0.0576258, -1.83383e-14, 0.0576258, -0.428576, 1.89023e-08, 8.26736, 2.04487, 44.9609 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="StaticBody2" type="StaticBody" parent="WorldGeometry/Wall5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Wall5/StaticBody2"]
+shape = SubResource( 9 )
+
+[node name="Wall6" type="MeshInstance" parent="WorldGeometry"]
+transform = Transform( -1.73514e-10, -1.89014e-08, -0.432433, -0.432415, 0.00396993, -1.77114e-14, -0.00396993, -0.432415, 1.89023e-08, 8.26736, 2.5674, 53.3343 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="StaticBody2" type="StaticBody" parent="WorldGeometry/Wall6"]
+
+[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Wall6/StaticBody2"]
 shape = SubResource( 9 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
