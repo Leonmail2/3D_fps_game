@@ -1,0 +1,183 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Gun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/hit.wav" type="AudioStream" id=3]
+[ext_resource path="res://HUD.gd" type="Script" id=4]
+[ext_resource path="res://Sprite.gd" type="Script" id=5]
+[ext_resource path="res://crosshair.png" type="Texture" id=6]
+[ext_resource path="res://Assets/blood.png" type="Texture" id=7]
+[ext_resource path="res://Assets/font.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Assets/9_mm_gunshot-mike-koenig-123.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/reload.wav" type="AudioStream" id=10]
+
+[sub_resource type="CapsuleShape" id=1]
+height = 2.04942
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.704168, 0.447801, 0.748535 )
+
+[sub_resource type="CapsuleShape" id=3]
+height = 2.5116
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+uniform float frequency = 10;
+uniform float offset = 0.5;
+uniform float amplitude = 0.2;
+uniform float flashing = 0;
+uniform float flash = 0.0;
+
+void fragment(){
+	float x = 0.001; 
+	if(flash > 0.1){
+		x = flash*0.01;
+	}
+	COLOR = vec4(texture(TEXTURE,UV).rgb,texture(TEXTURE,UV).a * (amplitude*sin(TIME*frequency)+offset)*flashing + (texture(TEXTURE,UV).a * x));
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/frequency = 10.0
+shader_param/offset = 0.5
+shader_param/amplitude = 0.2
+shader_param/flashing = 0.0
+shader_param/flash = 0.0
+
+[sub_resource type="CapsuleMesh" id=6]
+mid_height = 2.121
+
+[node name="Player" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.61328, 0 )
+script = ExtResource( 1 )
+pistol_ammo = 122
+max_pistol_ammo = 122
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="PistolTimer" type="Timer" parent="Timers"]
+wait_time = 0.35
+one_shot = true
+
+[node name="PistolReloadTimer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="HitSoundDelay" type="Timer" parent="Timers"]
+wait_time = 0.14
+one_shot = true
+
+[node name="Head" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.67038, 0 )
+
+[node name="Camera" type="Camera" parent="Head"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.13357, 0 )
+current = true
+near = 0.02
+
+[node name="Gun" parent="Head/Camera" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.448364, -0.210269, -0.769594 )
+
+[node name="Hit" type="AudioStreamPlayer" parent="Head/Camera/Gun"]
+stream = ExtResource( 3 )
+
+[node name="Shot" type="AudioStreamPlayer" parent="Head/Camera/Gun"]
+stream = ExtResource( 9 )
+volume_db = -17.644
+
+[node name="Reload" type="AudioStreamPlayer" parent="Head/Camera/Gun"]
+stream = ExtResource( 10 )
+volume_db = -4.902
+
+[node name="RayCast" type="RayCast" parent="Head/Camera"]
+transform = Transform( -1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -200, 0 )
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="DeathCamera" type="Camera" parent="Head"]
+transform = Transform( -0.866025, 0.5, -7.57103e-08, 0.5, 0.866025, 4.37114e-08, 8.74228e-08, 0, -1, 0, 0.674407, 0 )
+
+[node name="Hand" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0707588, 1.2149, 1.34017 )
+
+[node name="PhysicalCollider" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="PhysicalCollider2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.67038, 0 )
+shape = SubResource( 2 )
+
+[node name="PlayerCollider" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="PlayerCollider"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00189114, -0.0605719, -0.000198103 )
+shape = SubResource( 3 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource( 4 )
+
+[node name="Data" type="Control" parent="HUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blood" type="TextureRect" parent="HUD/Data"]
+modulate = Color( 1, 0, 0, 1 )
+material = SubResource( 5 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="HUD/Data"]
+anchor_top = 1.0
+anchor_right = 0.015
+anchor_bottom = 1.0
+margin_top = -76.0
+margin_right = 103.0
+custom_fonts/font = ExtResource( 8 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ammo" type="Label" parent="HUD/Data"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -223.0
+margin_top = -76.0
+custom_fonts/font = ExtResource( 8 )
+text = "20/100"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="HUD"]
+position = Vector2( 971.769, 493.689 )
+scale = Vector2( 0.0575937, 0.06 )
+texture = ExtResource( 6 )
+script = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 6 )
+material/0 = null
+[connection signal="ammo_change" from="." to="HUD" method="_on_Player_ammo_change"]
+[connection signal="player_health_changed" from="." to="HUD" method="_on_Player_player_health_changed"]
+[connection signal="player_just_damaged" from="." to="HUD" method="_on_Player_player_just_damaged"]
+[connection signal="timeout" from="Timers/PistolTimer" to="." method="_on_PistolTimer_timeout"]
+[connection signal="timeout" from="Timers/PistolReloadTimer" to="." method="_on_PistolReloadTimer_timeout"]
+[connection signal="timeout" from="Timers/HitSoundDelay" to="." method="_on_HitSoundDelay_timeout"]
