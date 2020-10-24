@@ -11,11 +11,11 @@
 [ext_resource path="res://Assets/9_mm_gunshot-mike-koenig-123.wav" type="AudioStream" id=9]
 [ext_resource path="res://Assets/reload.wav" type="AudioStream" id=10]
 
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 0.75, 0.229, 0.75 )
+
 [sub_resource type="CapsuleShape" id=1]
 height = 2.04942
-
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.704168, 0.447801, 0.748535 )
 
 [sub_resource type="CapsuleShape" id=3]
 height = 2.5116
@@ -63,7 +63,7 @@ one_shot = true
 one_shot = true
 
 [node name="HitSoundDelay" type="Timer" parent="Timers"]
-wait_time = 0.14
+wait_time = 0.11
 one_shot = true
 
 [node name="Head" type="Spatial" parent="."]
@@ -75,7 +75,7 @@ current = true
 near = 0.02
 
 [node name="Gun" parent="Head/Camera" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.448364, -0.210269, -0.769594 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.448364, -0.202282, -0.769594 )
 
 [node name="Hit" type="AudioStreamPlayer" parent="Head/Camera/Gun"]
 stream = ExtResource( 3 )
@@ -98,16 +98,13 @@ collide_with_bodies = false
 [node name="DeathCamera" type="Camera" parent="Head"]
 transform = Transform( -0.866025, 0.5, -7.57103e-08, 0.5, 0.866025, 4.37114e-08, 8.74228e-08, 0, -1, 0, 0.674407, 0 )
 
-[node name="Hand" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0707588, 1.2149, 1.34017 )
+[node name="GroundCollider" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1, -4.37114e-08, 0, 4.37114e-08, -1, 0, -2.13994, 0 )
+shape = SubResource( 7 )
 
 [node name="PhysicalCollider" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0 )
 shape = SubResource( 1 )
-
-[node name="PhysicalCollider2" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.67038, 0 )
-shape = SubResource( 2 )
 
 [node name="PlayerCollider" type="Area" parent="."]
 
