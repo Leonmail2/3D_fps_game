@@ -23,13 +23,13 @@ func die():
 	
 
 func hit(damage):
-	health = clamp(health - damage,0.0,100)
+	health = clamp(health - damage,0.0,MAX_HEALTH)
 	print(health)
 	$Head/Camera/GunManager.health = health
 	emit_signal("player_just_damaged",health)
 
 func heal(hp):
-	health = clamp(health+hp,0.0,100)
+	health = clamp(health+hp,0.0,MAX_HEALTH)
 	print(health)
 	$Head/Camera/GunManager.health = health
 	emit_signal("player_health_changed",health)
@@ -54,7 +54,7 @@ func get_movement_input():
 	return movement.normalized()
 
 func _ready():
-	pass
+	emit_signal("player_health_changed",health)
 
 func _physics_process(delta):
 	check_health()

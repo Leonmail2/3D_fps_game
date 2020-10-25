@@ -53,7 +53,7 @@ func _physics_process(delta):
 			var playerxz = Vector3(player.global_transform.origin.x,global_transform.origin.y,player.global_transform.origin.z)
 			look_at(playerxz,Vector3.UP)
 			var velocity = direction.normalized() * speed
-			velocity.y += -30 * delta
+			velocity.y += -40 * delta
 			move_and_slide(velocity,Vector3.UP)
 
 func move_to(target_pos):
