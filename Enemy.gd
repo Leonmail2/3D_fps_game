@@ -52,7 +52,9 @@ func _physics_process(delta):
 			$Gun.look_at(player.global_transform.origin,Vector3.UP)
 			var playerxz = Vector3(player.global_transform.origin.x,global_transform.origin.y,player.global_transform.origin.z)
 			look_at(playerxz,Vector3.UP)
-			move_and_slide(direction.normalized()*speed,Vector3.UP)
+			var velocity = direction.normalized() * speed
+			velocity.y += -30 * delta
+			move_and_slide(velocity,Vector3.UP)
 
 func move_to(target_pos):
 	path = nav.get_simple_path(global_transform.origin, target_pos)

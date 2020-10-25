@@ -71,9 +71,10 @@ func _physics_process(delta):
 				velocity = lerp(velocity,movement*PLAYER_SPEED,delta*ACCELERATION)
 			else:
 				velocity = lerp(velocity,movement*PLAYER_SPEED,delta*DEACCELERATION)
-		velocity = move_and_slide(velocity,Vector3.UP)
 		if is_on_floor() and Input.is_key_pressed(KEY_SPACE):
 			velocity.y = 25
+		velocity = move_and_slide(velocity,Vector3.UP)
+		
 		
 	
 func _input(event):

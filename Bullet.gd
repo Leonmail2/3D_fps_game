@@ -5,7 +5,7 @@ extends Spatial
 # var a = 2
 # var b = "text"
 export var damage = 999
-export var speed = 40
+export var speed = 35
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -25,3 +25,7 @@ func _on_Area_area_entered(area):
 
 func _on_Timer_timeout():
 	queue_free()
+
+func _on_Area_body_entered(body):
+	if body.name == "StaticBody":
+		queue_free()
