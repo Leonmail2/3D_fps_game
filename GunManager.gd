@@ -30,6 +30,7 @@ export var max_pistol_ammo = 20
 
 const pistol_cooldown_length = 0.4
 const pistol_reload_length = 1
+const pistol_equip_length = 1
 
 var shotgun_clip = 5
 export var shotgun_low_ammo = 2
@@ -38,7 +39,8 @@ export var shotgun_ammo = 27
 export var max_shotgun_ammo = 50
 
 const shotgun_cooldown_length = 0.7
-const shotgun_reload_length = 0.3
+const shotgun_reload_length = 0.8
+const shotgun_equip_length = 1
 
 func updateAmmoHud():
 	if current_weapon == "Shotgun":
@@ -67,7 +69,7 @@ func shootPistol():
 		$Gun/Shot.play()
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().hit(34)
-			$Timers/HitSoundDelay.start()
+			$Timers/HitSoundDelay.start(0.11)
 
 func shootShotgun():
 	var target = $RayCast.get_collider()
@@ -75,10 +77,10 @@ func shootShotgun():
 		animationHandler("Cooldown")
 		shotgun_clip = clamp(shotgun_clip - 1,0,max_shotgun_clip)
 		updateAmmoHud()
-		$Gun/Shot.play()
+		$Shotgun/Shot.play()
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().hit(100)
-			$Timers/HitSoundDelay.start()
+			$Timers/HitSoundDelay.start(0.15)
 		
 
 func reloadPistol():
@@ -141,7 +143,9 @@ func animationHandler(anim):
 				$Timers/ShotgunTimer.start(shotgun_reload_length)
 				can_shoot = false
 				anim_state = "ReloadInProgress"
-				$Shotgun/AnimationPlayer.play("Shotgun|Reload",0.1,3.7)
+				$Shotgun/AnimationPlayer.play("Shotgun|Reload",0.1,2.5)
+			elif anim == "Equip":
+				$Timers/ShotgunTimer.start(shotgun_equip_length)
 			else:
 				$Shotgun/AnimationPlayer.play("Shotgun|ShotgunIdle",0.1,0.4)
 	elif anim_state == "Reloading":

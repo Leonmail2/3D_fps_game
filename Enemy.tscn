@@ -23,7 +23,7 @@ mid_height = 1.5
 [sub_resource type="CapsuleShape" id=4]
 height = 1.49799
 
-[node name="Enemy" type="Spatial"]
+[node name="Enemy" type="KinematicBody"]
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
@@ -37,13 +37,25 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 4 )
 
-[node name="Gun" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1.8017, 0, 0, 0, 1.8017, 0, 0, 0, 1.8017, -0.763559, 0, -1.0449 )
-
-[node name="BulletSpawner" type="Spatial" parent="Gun"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.302316, 0.0805479, 0 )
-
 [node name="GunTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.339
+autostart = true
+
+[node name="Gun" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63646, 0, 0 )
+
+[node name="BulletSpawner" type="Spatial" parent="Gun"]
+transform = Transform( -7.87548e-08, 0, -1.8017, 0, 1.8017, 0, 1.8017, 0, -7.87548e-08, 0.355377, 0.145123, -0.314263 )
+
+[node name="Gun" parent="Gun/BulletSpawner" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="MeshInstance3" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 4 )
 [connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]
+[connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]

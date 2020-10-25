@@ -1,4 +1,4 @@
-extends Spatial
+extends KinematicBody
 
 
 # Declare member variables here. Examples:
@@ -6,6 +6,13 @@ extends Spatial
 # var b = "text"
 export var enemy_type = "Dummy"
 export var health = 100
+export var speed = 10
+
+var path = []
+var path_node = 0
+
+onready var nav = get_parent()
+onready var player = $"../../../Player"
 #var hitcolor = 1.0
 
 func die():
@@ -34,8 +41,26 @@ func _process(delta):
 	#$MeshInstance.mesh.material.set_shader_param("hitcolor",hitcolor)
 	#hitcolor = clamp(hitcolor + 0.5 * delta, 0.0, 1.0)
 	pass
-	
 
+
+func _physics_process(delta):
+	if path_node < path.size():
+		var direction = (path[path_node]-global_transform.origin)
+		if direction.length() < 1:
+			path_node += 1
+		else:
+			$Gun.look_at(player.global_transform.origin,Vector3.UP)
+			var playerxz = Vector3(player.global_transform.origin.x,global_transform.origin.y,player.global_transform.origin.z)
+			look_at(playerxz,Vector3.UP)
+			move_and_slide(direction.normalized()*speed,Vector3.UP)
+
+func move_to(target_pos):
+	path = nav.get_simple_path(global_transform.origin, target_pos)
+	path_node = 0
 
 func _on_GunTimer_timeout():
 	shoot()
+
+
+func _on_MoveTimer_timeout():
+	move_to(player.global_transform.origin)

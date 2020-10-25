@@ -1,11 +1,19 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://small.jpg" type="Texture" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://3DShooter.gd" type="Script" id=3]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HealthPack.tscn" type="PackedScene" id=5]
+[ext_resource path="res://KillWall.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/photo-1531147646552-1eec68116469.jpg" type="Texture" id=7]
+
+[sub_resource type="NavigationMesh" id=11]
+vertices = PoolVector3Array( -36.2116, 3.28664, 14.679, -26.9116, 3.28664, 14.979, -26.3116, 3.28664, 11.979, -18.5116, 3.28664, 21.579, -18.5116, 3.28664, 29.979, -10.7116, 3.28664, 29.979, -36.2116, 3.28664, 5.37904, -36.2116, 3.28664, 14.679, -26.3116, 3.28664, 11.979, -24.2116, 3.28664, 10.479, -27.2116, 3.28664, -58.821, -36.2116, 3.28664, -58.821, -36.2116, 3.28664, -49.821, -36.2116, 3.28664, -22.221, -36.2116, 3.28664, -13.221, -19.1116, 3.28664, 11.979, 36.0884, 3.28664, -47.421, 36.0884, 3.28664, -58.821, 26.7884, 3.28664, -58.821, -36.2116, 3.28664, 5.37904, -24.2116, 3.28664, 10.479, -21.2116, 3.28664, 10.479, -36.2116, 3.28664, -3.92096, -18.5116, 3.28664, 21.579, -10.7116, 3.28664, 29.979, -2.61158, 3.28664, 29.979, -18.5116, 3.28664, 13.179, -18.2116, 3.28664, -58.821, -27.2116, 3.28664, -58.821, -36.2116, 3.28664, -49.821, -9.21158, 3.28664, -58.821, -36.2116, 3.28664, -40.521, -36.2116, 3.28664, -31.521, -0.211582, 3.28664, -58.821, 36.0884, 3.28664, -47.421, 26.7884, 3.28664, -58.821, 17.7884, 3.28664, -58.821, -0.511581, 3.28664, 31.479, 36.0884, 3.28664, 22.479, 36.0884, 3.28664, 10.779, -36.2116, 3.28664, -3.92096, -21.2116, 3.28664, 10.479, -19.1116, 3.28664, 11.979, -36.2116, 3.28664, -13.221, -19.1116, 3.28664, 11.979, -18.5116, 3.28664, 13.179, -2.61158, 3.28664, 29.979, -0.511581, 3.28664, 31.479, -18.2116, 3.28664, -58.821, -36.2116, 3.28664, -49.821, -36.2116, 3.28664, -40.521, -9.21158, 3.28664, -58.821, -19.1116, 3.28664, 11.979, -0.511581, 3.28664, 31.479, 36.0884, 3.28664, -0.920963, 36.0884, 3.28664, -12.321, -0.211582, 3.28664, -58.821, -36.2116, 3.28664, -31.521, 36.0884, 3.28664, -35.721, 36.0884, 3.28664, -47.421, 17.7884, 3.28664, -58.821, 8.78842, 3.28664, -58.821, 36.0884, 3.28664, -35.721, 8.78842, 3.28664, -58.821, -0.211582, 3.28664, -58.821, 36.0884, 3.28664, -24.021, -36.2116, 3.28664, -31.521, -36.2116, 3.28664, -22.221, -19.1116, 3.28664, 11.979, -0.511581, 3.28664, 31.479, 36.0884, 3.28664, 10.779, 36.0884, 3.28664, -0.920963, -0.511581, 3.28664, 31.479, 0.0884209, 3.28664, 34.179, 36.0884, 3.28664, 34.179, 36.0884, 3.28664, 22.479, 36.0884, 3.28664, -12.321, 36.0884, 3.28664, -24.021, -0.211582, 3.28664, -58.821, -26.9116, 3.28664, 14.979, -36.2116, 3.28664, 14.679, -36.2116, 3.28664, 23.379, -26.9116, 3.28664, 23.379, -26.9116, 3.28664, 32.079, -26.9116, 3.28664, 23.379, -36.2116, 3.28664, 23.379, -36.2116, 3.28664, 32.379, -26.9116, 3.28664, 33.879, -26.9116, 3.28664, 32.079, -36.2116, 3.28664, 32.379, -26.9116, 3.28664, 33.879, -36.2116, 3.28664, 32.379, -36.2116, 3.28664, 38.979, -25.7116, 3.28664, 36.879, -12.8116, 3.28664, 38.379, -23.6116, 3.28664, 38.379, -19.1116, 3.28664, 59.079, -10.7116, 3.28664, 59.079, -36.2116, 3.28664, 52.179, -36.2116, 3.28664, 59.079, -27.8116, 3.28664, 59.079, -23.6116, 3.28664, 38.379, -25.7116, 3.28664, 36.879, -36.2116, 3.28664, 38.979, -36.2116, 3.28664, 45.579, -10.7116, 3.28664, 59.079, -2.01158, 3.28664, 59.079, -2.01158, 3.28664, 38.079, -12.8116, 3.28664, 38.379, -36.2116, 3.28664, 45.579, -36.2116, 3.28664, 52.179, -27.8116, 3.28664, 59.079, -19.1116, 3.28664, 59.079, -23.6116, 3.28664, 38.379, 26.4884, 3.28664, 59.079, 36.0884, 3.28664, 59.079, 36.0884, 3.28664, 52.779, 26.4884, 3.28664, 59.079, 36.0884, 3.28664, 52.779, 36.0884, 3.28664, 46.479, 26.4884, 3.28664, 59.079, 36.0884, 3.28664, 46.479, 36.0884, 3.28664, 40.179, -0.511581, 3.28664, 36.879, -2.01158, 3.28664, 38.079, -2.01158, 3.28664, 59.079, 7.28842, 3.28664, 59.079, 26.4884, 3.28664, 59.079, 36.0884, 3.28664, 40.179, 36.0884, 3.28664, 34.179, 0.0884209, 3.28664, 34.179, 16.8884, 3.28664, 59.079, 0.0884209, 3.28664, 34.179, -0.511581, 3.28664, 36.879, 7.28842, 3.28664, 59.079, 16.8884, 3.28664, 59.079 )
+polygons = [ PoolIntArray( 2, 1, 0 ), PoolIntArray( 5, 4, 3 ), PoolIntArray( 9, 8, 6 ), PoolIntArray( 6, 8, 7 ), PoolIntArray( 12, 11, 10 ), PoolIntArray( 15, 14, 13 ), PoolIntArray( 18, 17, 16 ), PoolIntArray( 22, 21, 19 ), PoolIntArray( 19, 21, 20 ), PoolIntArray( 26, 25, 23 ), PoolIntArray( 23, 25, 24 ), PoolIntArray( 29, 28, 27 ), PoolIntArray( 33, 32, 30 ), PoolIntArray( 30, 32, 31 ), PoolIntArray( 36, 35, 34 ), PoolIntArray( 39, 38, 37 ), PoolIntArray( 43, 42, 40 ), PoolIntArray( 40, 42, 41 ), PoolIntArray( 47, 46, 44 ), PoolIntArray( 44, 46, 45 ), PoolIntArray( 51, 50, 48 ), PoolIntArray( 48, 50, 49 ), PoolIntArray( 57, 56, 52 ), PoolIntArray( 52, 56, 53 ), PoolIntArray( 53, 56, 55 ), PoolIntArray( 53, 55, 54 ), PoolIntArray( 61, 60, 58 ), PoolIntArray( 58, 60, 59 ), PoolIntArray( 65, 64, 62 ), PoolIntArray( 62, 64, 63 ), PoolIntArray( 68, 67, 66 ), PoolIntArray( 71, 70, 69 ), PoolIntArray( 75, 74, 72 ), PoolIntArray( 72, 74, 73 ), PoolIntArray( 78, 77, 76 ), PoolIntArray( 82, 81, 79 ), PoolIntArray( 79, 81, 80 ), PoolIntArray( 86, 85, 83 ), PoolIntArray( 83, 85, 84 ), PoolIntArray( 89, 88, 87 ), PoolIntArray( 93, 92, 90 ), PoolIntArray( 90, 92, 91 ), PoolIntArray( 97, 96, 94 ), PoolIntArray( 94, 96, 95 ), PoolIntArray( 100, 99, 98 ), PoolIntArray( 104, 103, 101 ), PoolIntArray( 101, 103, 102 ), PoolIntArray( 108, 107, 105 ), PoolIntArray( 105, 107, 106 ), PoolIntArray( 113, 112, 109 ), PoolIntArray( 109, 112, 111 ), PoolIntArray( 109, 111, 110 ), PoolIntArray( 116, 115, 114 ), PoolIntArray( 119, 118, 117 ), PoolIntArray( 122, 121, 120 ), PoolIntArray( 126, 125, 123 ), PoolIntArray( 123, 125, 124 ), PoolIntArray( 131, 130, 127 ), PoolIntArray( 127, 130, 128 ), PoolIntArray( 128, 130, 129 ), PoolIntArray( 135, 134, 132 ), PoolIntArray( 132, 134, 133 ) ]
+cell/height = 2.16
+agent/height = 2.22
+agent/radius = 2.81
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -54,41 +62,55 @@ script = ExtResource( 3 )
 
 [node name="WorldGeometry" type="Spatial" parent="."]
 
-[node name="Floor" type="MeshInstance" parent="WorldGeometry"]
-transform = Transform( 21.605, 0, 0, 0, 0.428481, 0, 0, 0, 34.1022, -0.00883675, -0.446826, 0.0582218 )
+[node name="Navigation" type="Navigation" parent="WorldGeometry"]
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="WorldGeometry/Navigation"]
+navmesh = SubResource( 11 )
+
+[node name="Floor" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
+transform = Transform( 39.2027, 0, 0, 0, 0.428481, 0, 0, 0, 61.8792, -0.00883675, -0.446826, 0.0582218 )
 mesh = SubResource( 3 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="WorldGeometry/Floor"]
+[node name="StaticBody" type="StaticBody" parent="WorldGeometry/Navigation/NavigationMeshInstance/Floor"]
 physics_material_override = SubResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Floor/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Navigation/NavigationMeshInstance/Floor/StaticBody"]
 shape = SubResource( 5 )
 
-[node name="Area" type="Area" parent="WorldGeometry/Floor"]
+[node name="Area" type="Area" parent="WorldGeometry/Navigation/NavigationMeshInstance/Floor"]
 
-[node name="CollisionShape2" type="CollisionShape" parent="WorldGeometry/Floor/Area"]
+[node name="CollisionShape2" type="CollisionShape" parent="WorldGeometry/Navigation/NavigationMeshInstance/Floor/Area"]
 shape = SubResource( 5 )
 
-[node name="Wall" type="MeshInstance" parent="WorldGeometry"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.787, 8.96664, 23.5205 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="StaticBody" type="StaticBody" parent="WorldGeometry/Wall"]
-
-[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Wall/StaticBody"]
-shape = SubResource( 7 )
-
-[node name="Wall2" type="MeshInstance" parent="WorldGeometry"]
+[node name="Wall2" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13.035, 8.96664, 34.265 )
 mesh = SubResource( 6 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="WorldGeometry/Wall2"]
+[node name="StaticBody" type="StaticBody" parent="WorldGeometry/Navigation/NavigationMeshInstance/Wall2"]
 
-[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Wall2/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Navigation/NavigationMeshInstance/Wall2/StaticBody"]
 shape = SubResource( 7 )
+
+[node name="Wall" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.787, 8.96664, 23.5205 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="WorldGeometry/Navigation/NavigationMeshInstance/Wall"]
+
+[node name="CollisionShape" type="CollisionShape" parent="WorldGeometry/Navigation/NavigationMeshInstance/Wall/StaticBody"]
+shape = SubResource( 7 )
+
+[node name="Enemy2" parent="WorldGeometry/Navigation" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53574, 3.26846, -11.6311 )
+
+[node name="Enemy3" parent="WorldGeometry/Navigation" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53574, 3.26846, -4.47589 )
+
+[node name="Enemy4" parent="WorldGeometry/Navigation" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.595, 3.26846, -11.6311 )
 
 [node name="Wall3" type="MeshInstance" parent="WorldGeometry"]
 transform = Transform( 1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -13.035, 17.806, 24.1449 )
@@ -101,7 +123,7 @@ material/0 = null
 shape = SubResource( 7 )
 
 [node name="Wall4" type="MeshInstance" parent="WorldGeometry"]
-transform = Transform( 5.57002e-09, -1.80629e-08, -0.432433, -0.413232, -0.127427, -1.78229e-14, 0.127427, -0.413232, 1.89023e-08, 8.26736, 0.214946, 36.6148 )
+transform = Transform( 5.57002e-09, -1.80629e-08, -0.432433, -0.413232, -0.127427, -1.78229e-14, 0.127427, -0.413232, 1.89023e-08, 8.26736, 0.214946, 63.4903 )
 mesh = SubResource( 6 )
 material/0 = null
 
@@ -111,7 +133,7 @@ material/0 = null
 shape = SubResource( 8 )
 
 [node name="Wall5" type="MeshInstance" parent="WorldGeometry"]
-transform = Transform( 2.51892e-09, -1.87337e-08, -0.432433, -0.428576, -0.0576258, -1.83383e-14, 0.0576258, -0.428576, 1.89023e-08, 8.26736, 2.04487, 44.9609 )
+transform = Transform( 2.51892e-09, -1.87337e-08, -0.432433, -0.428576, -0.0576258, -1.83383e-14, 0.0576258, -0.428576, 1.89023e-08, 8.26736, 2.04487, 71.8364 )
 mesh = SubResource( 6 )
 material/0 = null
 
@@ -121,7 +143,7 @@ material/0 = null
 shape = SubResource( 8 )
 
 [node name="Wall6" type="MeshInstance" parent="WorldGeometry"]
-transform = Transform( -1.73514e-10, -1.89014e-08, -0.432433, -0.432415, 0.00396993, -1.77114e-14, -0.00396993, -0.432415, 1.89023e-08, 8.26736, 2.5674, 53.3343 )
+transform = Transform( -1.73514e-10, -1.89014e-08, -0.432433, -0.432415, 0.00396993, -1.77114e-14, -0.00396993, -0.432415, 1.89023e-08, 8.26736, 2.5674, 80.2098 )
 mesh = SubResource( 6 )
 material/0 = null
 
@@ -131,9 +153,6 @@ material/0 = null
 shape = SubResource( 8 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-
-[node name="Enemy" parent="." instance=ExtResource( 4 )]
-transform = Transform( 0.928499, 0, -0.371335, 0, 1, 0, 0.371335, 0, 0.928499, 11.5751, 2.37586, 0 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.331667, 0.943396, 0, -0.943396, -0.331667, 0, 31.47, -15.111 )
@@ -149,5 +168,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.71875, 2.48274, 25.7653 )
 [node name="HealthPack2" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.16889, 2.48274, 25.7653 )
 
-[node name="Enemy2" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53574, 3.26846, -11.6311 )
+[node name="KillWall" parent="." instance=ExtResource( 6 )]
+transform = Transform( 5.96673, 0, 0, 0, 1, 0, 0, 0, 5.96673, 0, -19.5105, 0 )
