@@ -68,6 +68,9 @@ func shootShotgun():
 		shotgun_clip = clamp(shotgun_clip - 1,0,max_shotgun_clip)
 		emit_signal("ammo_change",shotgun_ammo,shotgun_clip)
 		$Gun/Shot.play()
+		if(target != null and target.name == "EnemyHitDetector"):
+			target.get_parent_spatial().hit(100)
+			$Timers/HitSoundDelay.start()
 		
 
 func reloadPistol():
@@ -76,17 +79,13 @@ func reloadPistol():
 		$Gun/Reload.play()
 		animationHandler("Reload")
 		reloading = true
-	else:
-		print("No ammo!")
 
 func reloadShotgun():
-	if(shotgun_ammo>0 and shotgun_clip != max_pistol_clip and reloading == false and can_shoot == true):
+	if(shotgun_ammo>0 and shotgun_clip != max_shotgun_clip and reloading == false and can_shoot == true):
 		$Timers/ShotgunReloadTimer.start(pistol_reload_length)
 		$Shotgun/Reload.play()
 		animationHandler("Reload")
 		reloading = true
-	else:
-		print("No ammo!")
 	
 func _on_PistolReloadTimer_timeout():
 	if pistol_ammo > 0:
