@@ -20,6 +20,7 @@ var camera_direction = Vector2()
 
 var reloading = false
 var play_walk_anim = false
+
 var anim_pistol_state = ""
 var can_shoot_pistol = true
 var pistol_clip = 15
@@ -29,6 +30,16 @@ export var max_pistol_ammo = 20
 
 const pistol_cooldown_length = 0.4
 const pistol_reload_length = 1
+
+var anim_shotgun_state = ""
+var can_shoot_shotgun = true
+var shotgun_clip = 5
+export var max_shotgun_clip = 5
+export var shotgun_ammo = 27
+export var max_shotgun_ammo = 50
+
+const shotgun_cooldown_length = 0.8
+const shotgun_reload_length = 0.4
 
 func die():
 	health = 0
@@ -67,6 +78,15 @@ func shootPistol():
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().hit(34)
 			$Timers/HitSoundDelay.start()
+
+func shootShotgun():
+	var target = $Head/Camera/RayCast.get_collider()
+	if(can_shoot_shotgun == true and shotgun_clip > 0):
+		pistolAnimationHandler("Cooldown")
+		shotgun_clip = clamp(shotgun_clip - 1,0,max_shotgun_clip)
+		emit_signal("ammo_change",shotgun_ammo,shotgun_clip)
+		$Head/Camera/Gun/Shot.play()
+		
 
 func reloadPistol():
 	if(pistol_ammo>0 and pistol_clip != max_pistol_clip and reloading == false and can_shoot_pistol == true):

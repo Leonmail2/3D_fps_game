@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/shotgun.fbx" type="PackedScene" id=1]
+
+[node name="Shotgun" instance=ExtResource( 1 )]
+
+[node name="Shotgun2" parent="." index="0"]
+transform = Transform( 100, -0.000233982, -0.0128563, 0.0128473, -2.33562, 99.9727, -0.000534191, -99.9727, -2.33562, -0.0106228, 0.0466472, -0.0381402 )
