@@ -1,66 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Assets/gun.fbx" type="PackedScene" id=1]
-
-[sub_resource type="ParticlesMaterial" id=1]
-spread = 140.1
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 40.94
-angular_velocity = -142.73
-angular_velocity_random = 0.51
-
-[sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 1, 0.843137, 0, 1 )
-emission_enabled = true
-emission = Color( 1, 0.937255, 0, 1 )
-emission_energy = 4.74
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="CubeMesh" id=3]
-material = SubResource( 2 )
-size = Vector3( 0.2, 0.2, 0.2 )
-
-[sub_resource type="ParticlesMaterial" id=4]
-spread = 2.54
-gravity = Vector3( 0, -20, 0 )
-initial_velocity = 52.35
-angular_velocity = 81.13
-linear_accel = 19.72
-
-[sub_resource type="SpatialMaterial" id=5]
-albedo_color = Color( 0.509804, 0.509804, 0.509804, 1 )
-
-[sub_resource type="CapsuleMesh" id=6]
-material = SubResource( 5 )
-radius = 0.25
+[ext_resource path="res://Gun.gd" type="Script" id=2]
 
 [node name="Gun" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
 
 [node name="Gun2" parent="." index="0"]
 transform = Transform( 4.96738, 0, 0, 0, -5.92158e-07, 4.96738, 0, -4.96738, -5.92158e-07, 0, 0, 0 )
-
-[node name="MuzzleParticles" type="Particles" parent="." index="2"]
-transform = Transform( -0.0637506, 0, -5.57325e-09, 0, 0.0637506, 0, 5.57325e-09, 0, -0.0637506, -0.337739, 0.0910806, -0.00171429 )
-emitting = false
-amount = 204
-lifetime = 0.15
-one_shot = true
-speed_scale = 1.86
-explosiveness = 1.0
-randomness = 0.54
-visibility_aabb = AABB( -1.37112, -1.50116, -1.08811, 2.74224, 3.00231, 2.17623 )
-process_material = SubResource( 1 )
-draw_pass_1 = SubResource( 3 )
-
-[node name="ShellParticles" type="Particles" parent="." index="3"]
-transform = Transform( -2.78664e-09, 1.11376e-11, 0.0637506, -0.000254798, 0.0637501, -2.22751e-11, -0.0637501, -0.000254798, -2.78658e-09, -0.119224, 0.0910806, -0.00171429 )
-emitting = false
-amount = 1
-lifetime = 0.36
-one_shot = true
-speed_scale = 5.13
-randomness = 0.54
-visibility_aabb = AABB( -1.37112, -1.50116, -1.08811, 2.74224, 3.00231, 2.17623 )
-process_material = SubResource( 4 )
-draw_pass_1 = SubResource( 6 )

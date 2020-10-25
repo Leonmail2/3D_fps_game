@@ -1,30 +1,33 @@
 [gd_scene load_steps=4 format=2]
 
-[sub_resource type="ParticlesMaterial" id=3]
-direction = Vector3( 0, 0, -1 )
-spread = 105.54
-gravity = Vector3( 0, 0, -9.8 )
-initial_velocity = 11.49
-angular_velocity = 15.53
-angular_velocity_random = 0.36
+[sub_resource type="ParticlesMaterial" id=1]
+spread = 140.1
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 40.94
+angular_velocity = -142.73
+angular_velocity_random = 0.51
 
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 1, 0.513726, 0, 1 )
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 1, 0.843137, 0, 1 )
+emission_enabled = true
+emission = Color( 1, 0.937255, 0, 1 )
+emission_energy = 4.74
+emission_operator = 0
+emission_on_uv2 = false
 
-[sub_resource type="CapsuleMesh" id=2]
-material = SubResource( 4 )
-radius = 0.1
-mid_height = 0.2
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 2 )
+size = Vector3( 0.2, 0.2, 0.2 )
 
 [node name="MuzzleParticles" type="Particles"]
-transform = Transform( 5.44133e-09, 0, 0.124483, 0, -0.124483, 0, -0.124483, 0, 5.44133e-09, -0.286462, 0.0983164, 0 )
+transform = Transform( -0.0637506, 0, -5.57325e-09, 0, 0.0637506, 0, 5.57325e-09, 0, -0.0637506, -0.337739, 0.0910806, -0.00171429 )
 emitting = false
-amount = 20
-lifetime = 0.3
+amount = 204
+lifetime = 0.15
 one_shot = true
-speed_scale = 2.0
-explosiveness = 0.52
-randomness = 0.16
-visibility_aabb = AABB( -0.73065, -0.950815, -0.867546, 1.4613, 1.90163, 1.739 )
-process_material = SubResource( 3 )
-draw_pass_1 = SubResource( 2 )
+speed_scale = 1.86
+explosiveness = 1.0
+randomness = 0.54
+visibility_aabb = AABB( -1.37112, -1.50116, -1.08811, 2.74224, 3.00231, 2.17623 )
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 3 )
