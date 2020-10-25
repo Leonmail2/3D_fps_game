@@ -135,7 +135,7 @@ func animationHandler(anim):
 				$Timers/ShotgunTimer.start(shotgun_reload_length)
 				can_shoot = false
 				anim_state = "ReloadInProgress"
-				$Shotgun/AnimationPlayer.play("Shotgun|Reload",0.2,1.2)
+				$Shotgun/AnimationPlayer.play("Shotgun|Reload",0.2,1.55)
 			else:
 				$Shotgun/AnimationPlayer.play("Shotgun|Idle",0.2,1.2)
 	elif anim_state == "Reloading":
