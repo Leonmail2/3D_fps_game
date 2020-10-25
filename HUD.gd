@@ -29,9 +29,9 @@ func update_health(health):
 		$Data/Health.set("custom_colors/font_color",Color(1, 0, 0))
 
 
-func update_ammo(new_ammo,new_clip):
+func update_ammo(new_ammo,new_clip,new_low):
 	$Data/Ammo.text = str(str(new_clip)+"/"+str(new_ammo))
-	if new_clip > 5:
+	if new_clip > new_low:
 		$Data/Ammo.set("custom_colors/font_color",Color(1, 1, 1))
 	else:
 		$Data/Ammo.set("custom_colors/font_color",Color(1, 0, 0))
@@ -63,5 +63,6 @@ func _on_Player_player_health_changed(health):
 	update_health(health)
 
 
-func _on_Player_ammo_change(ammo,clip):
-	update_ammo(ammo,clip)
+func _on_GunManager_ammo_change(ammo,clip,new_low):
+	update_ammo(ammo,clip,new_low)
+

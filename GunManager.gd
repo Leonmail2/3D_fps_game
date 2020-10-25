@@ -24,6 +24,7 @@ var can_shoot = true
 
 var pistol_clip = 15
 export var max_pistol_clip = 15
+export var pistol_low_ammo = 5
 export var pistol_ammo = 20
 export var max_pistol_ammo = 20
 
@@ -31,12 +32,19 @@ const pistol_cooldown_length = 0.4
 const pistol_reload_length = 1
 
 var shotgun_clip = 5
+export var shotgun_low_ammo = 2
 export var max_shotgun_clip = 5
 export var shotgun_ammo = 27
 export var max_shotgun_ammo = 50
 
-const shotgun_cooldown_length = 1.0
-const shotgun_reload_length = 0.6
+const shotgun_cooldown_length = 0.7
+const shotgun_reload_length = 0.3
+
+func updateAmmoHud():
+	if current_weapon == "Shotgun":
+		emit_signal("ammo_change",shotgun_ammo,shotgun_clip,shotgun_low_ammo)
+	elif current_weapon == "Pistol":
+		emit_signal("ammo_change",pistol_ammo,pistol_clip,pistol_low_ammo)
 
 
 func _on_PistolTimer_timeout():
@@ -55,7 +63,7 @@ func shootPistol():
 	if(can_shoot == true and pistol_clip > 0):
 		animationHandler("Cooldown")
 		pistol_clip = clamp(pistol_clip - 1,0,max_pistol_clip)
-		emit_signal("ammo_change",pistol_ammo,pistol_clip)
+		updateAmmoHud()
 		$Gun/Shot.play()
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().hit(34)
@@ -66,7 +74,7 @@ func shootShotgun():
 	if(can_shoot== true and shotgun_clip > 0):
 		animationHandler("Cooldown")
 		shotgun_clip = clamp(shotgun_clip - 1,0,max_shotgun_clip)
-		emit_signal("ammo_change",shotgun_ammo,shotgun_clip)
+		updateAmmoHud()
 		$Gun/Shot.play()
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().hit(100)
@@ -82,7 +90,7 @@ func reloadPistol():
 
 func reloadShotgun():
 	if(shotgun_ammo>0 and shotgun_clip != max_shotgun_clip and reloading == false and can_shoot == true):
-		$Timers/ShotgunReloadTimer.start(pistol_reload_length)
+		$Timers/ShotgunReloadTimer.start(shotgun_reload_length)
 		$Shotgun/Reload.play()
 		animationHandler("Reload")
 		reloading = true
@@ -92,16 +100,15 @@ func _on_PistolReloadTimer_timeout():
 		var new_ammo = clamp(pistol_ammo - (max_pistol_clip - pistol_clip),0.0,max_pistol_ammo)
 		pistol_clip = clamp(pistol_ammo,0.0,max_pistol_clip)
 		pistol_ammo = clamp(new_ammo,0,max_pistol_ammo)
-		emit_signal("ammo_change",pistol_ammo,pistol_clip)
+		updateAmmoHud()
 	reloading = false
 
 func _on_ShotgunReload_timeout():
 	if shotgun_ammo > 0:
 		shotgun_clip = clamp(shotgun_clip + 1, 0, max_shotgun_clip)
 		shotgun_ammo -= 1
-		emit_signal("ammo_change",shotgun_ammo,shotgun_clip)
+		updateAmmoHud()
 	reloading = false
-
 
 func animationHandler(anim):
 	if anim_state == "":
@@ -119,9 +126,9 @@ func animationHandler(anim):
 				$Timers/PistolTimer.start(pistol_reload_length)
 				can_shoot = false
 				anim_state = "Reloading"
-				$Gun/AnimationPlayer.play("Gun|Reload",0.4,1)
+				$Gun/AnimationPlayer.play("Gun|Reload",0.1,1)
 			else:
-				$Gun/AnimationPlayer.play("Gun|Idle",0.2,1.2)
+				$Gun/AnimationPlayer.play("Gun|Idle",0.1,1.2)
 		elif current_weapon == "Shotgun":
 			if anim == "Running":
 				$Shotgun/AnimationPlayer.play("Shotgun|ShotgunWalk",0.01,1.7)
@@ -129,14 +136,14 @@ func animationHandler(anim):
 				$Timers/ShotgunTimer.start(shotgun_cooldown_length)
 				can_shoot = false
 				anim_state = "ReloadInProgress"
-				$Shotgun/AnimationPlayer.play("Shotgun|Reload",-2,-3,true)
+				$Shotgun/AnimationPlayer.play("Shotgun|Reload",0.08,-3,true)
 			elif anim == "Reload":
 				$Timers/ShotgunTimer.start(shotgun_reload_length)
 				can_shoot = false
 				anim_state = "ReloadInProgress"
-				$Shotgun/AnimationPlayer.play("Shotgun|Reload",0.2,1.55)
+				$Shotgun/AnimationPlayer.play("Shotgun|Reload",0.1,3.7)
 			else:
-				$Shotgun/AnimationPlayer.play("Shotgun|Idle",0.2,1.2)
+				$Shotgun/AnimationPlayer.play("Shotgun|ShotgunIdle",0.1,0.4)
 	elif anim_state == "Reloading":
 		pass
 
@@ -153,15 +160,17 @@ func showWeapon(weapon):
 		$Shotgun.show()
 
 func switchWeapons(new_weapon):
-	if reloading == false:
+	if reloading == false and anim_state == "":
 		if new_weapon == "Pistol":
 			hideWeapon(current_weapon)
 			showWeapon(new_weapon)
 			current_weapon = "Pistol"
+			updateAmmoHud()
 		if new_weapon == "Shotgun":
 			hideWeapon(current_weapon)
 			showWeapon(new_weapon)
 			current_weapon = "Shotgun"
+			updateAmmoHud()
 
 func gunHandler(action,animation="Idle"):
 	if action == "Shoot":
@@ -188,6 +197,7 @@ func get_keyboard_input():
 func _ready():
 	switchWeapons("Pistol")
 	$Shotgun.hide()
+	updateAmmoHud()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -203,8 +213,3 @@ func _process(delta):
 				animationHandler("Running")
 			else:
 				animationHandler("Idle")
-
-
-
-
-
