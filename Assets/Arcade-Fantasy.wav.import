@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Arcade-Fantasy.wav-82da20f8be85c350b97017f81745d716.sample"
+
+[deps]
+
+source_file="res://Assets/Arcade-Fantasy.wav"
+dest_files=[ "res://.import/Arcade-Fantasy.wav-82da20f8be85c350b97017f81745d716.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

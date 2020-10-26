@@ -288,10 +288,11 @@ anims/Gun|WalkCycle = SubResource( 4 )
 
 [node name="Hit" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 3 )
+volume_db = 3.718
 
 [node name="Shot" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 9 )
-volume_db = -17.644
+volume_db = -6.892
 
 [node name="Reload" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 10 )
