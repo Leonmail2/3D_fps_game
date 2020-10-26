@@ -166,7 +166,7 @@ material/0 = null
 shape = SubResource( 14 )
 
 [node name="Enemy4" parent="WorldGeometry/Navigation" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.595, 8.10905, 29.0581 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.595, 4.79509, -37.3932 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62395, 2.61328, 0 )

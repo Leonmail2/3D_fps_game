@@ -14,6 +14,7 @@ enum {
 var state = IDLE
 var player_visible = false
 export var detection_radius = 40
+export var field_of_view = 60
 
 export var enemy_type = "Dummy"
 export var health = 100
@@ -61,8 +62,8 @@ func _physics_process(delta):
 	var EnemyToPlayer = $"/root/3DShooter/Player".translation - translation
 	if EnemyToPlayer.length() < detection_radius:
 		$RayCastLineOfSight.cast_to = EnemyToPlayer
-		EnemyToPlayer = EnemyToPlayer.normalize()
-		if true:
+		EnemyToPlayer = EnemyToPlayer.normalized()
+		if EnemyToPlayer.angle_to(-transform.basis.z) < deg2rad(field_of_view):
 			EnemyToPlayer = EnemyToPlayer * 30
 			var target = $RayCastLineOfSight.get_collider()
 			if target != null and target.name == "PlayerCollider":
@@ -95,7 +96,7 @@ func move_to(target_pos):
 	path_node = 0
 
 func _on_GunTimer_timeout():
-	if state == ALERT and player_visible == true:
+	if state == ALERT:
 		shoot()
 
 

@@ -95,6 +95,9 @@ func reloadShotgun():
 		$Timers/ShotgunReloadTimer.start(shotgun_reload_length)
 		$Shotgun/Reload.play()
 		animationHandler("Reload")
+		shotgun_clip = clamp(shotgun_clip + 1, 0, max_shotgun_clip)
+		shotgun_ammo -= 1
+		updateAmmoHud()
 		reloading = true
 	
 func _on_PistolReloadTimer_timeout():
@@ -106,10 +109,6 @@ func _on_PistolReloadTimer_timeout():
 	reloading = false
 
 func _on_ShotgunReload_timeout():
-	if shotgun_ammo > 0:
-		shotgun_clip = clamp(shotgun_clip + 1, 0, max_shotgun_clip)
-		shotgun_ammo -= 1
-		updateAmmoHud()
 	reloading = false
 
 func animationHandler(anim):

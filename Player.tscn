@@ -260,9 +260,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.67038, 0 )
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.13357, 0 )
 current = true
 near = 0.02
+far = 1158.0
 
 [node name="GunManager" type="Spatial" parent="Head/Camera"]
 script = ExtResource( 12 )
+pistol_ammo = 125
+max_pistol_ammo = 127
+shotgun_ammo = 50
 
 [node name="RayCast" type="RayCast" parent="Head/Camera/GunManager"]
 transform = Transform( -1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0, 0 )
@@ -375,6 +379,7 @@ one_shot = true
 
 [node name="DeathCamera" type="Camera" parent="Head"]
 transform = Transform( -0.866025, 0.5, -7.57103e-08, 0.5, 0.866025, 4.37114e-08, 8.74228e-08, 0, -1, 0, 0.674407, 0 )
+far = 1004.1
 
 [node name="GroundCollider" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1, -4.37114e-08, 0, 4.37114e-08, -1, 0, -2.13994, 0 )
