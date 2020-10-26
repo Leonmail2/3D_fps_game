@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Gun.tscn" type="PackedScene" id=2]
@@ -24,6 +24,9 @@ mid_height = 3.0
 [sub_resource type="CapsuleShape" id=4]
 radius = 1.5
 height = 3.0
+
+[sub_resource type="RayShape" id=5]
+length = 3.46066
 
 [node name="Enemy" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -67,5 +70,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.862, 0 )
 enabled = true
 cast_to = Vector3( 0, 0, 1 )
 collide_with_areas = true
+
+[node name="Area" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 5 )
 [connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]
