@@ -166,10 +166,13 @@ material/0 = null
 shape = SubResource( 14 )
 
 [node name="Enemy4" parent="WorldGeometry/Navigation" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.595, 4.795, 12.0495 )
+transform = Transform( 1, 0, 1.01332e-07, 0, 1, 0, -1.01332e-07, 0, 1, 0.904507, 4.795, -40.2229 )
+
+[node name="Enemy5" parent="WorldGeometry/Navigation" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 1.01332e-07, 0, 1, 0, -1.01332e-07, 0, 1, 14.7523, 4.795, -40.2229 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7648, 2.61328, -17.9646 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3905, 2.61328, 6.20483 )
 health = 1085
 MAX_HEALTH = 1168
 

@@ -11,10 +11,10 @@ enum {
 	SEARCHING = 3,
 }
 
-var state = IDLE
-var player_visible = false
-export var detection_radius = 40
-export var field_of_view = 60
+export var state = IDLE
+var player_visible = true
+export var detection_radius = 30
+export var field_of_view = 40
 
 export var enemy_type = "Dummy"
 export var health = 100
@@ -38,31 +38,44 @@ func hit(damage):
 	#hitcolor = 0.0
 	if health == 0:
 		die()
+	set_state_alert()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#transform.basis = Basis()
 	print($"/root/3DShooter/Player".transform.origin - transform.origin)
 	$RayCastLineOfSight.add_exception($EnemyHitDetector)
+	$GunTimer.wait_time = randf()+2
 
 func shoot():
 	var bullet = preload("res://Bullet.tscn").instance()
 	get_node('/root/3DShooter').add_child(bullet)
 	bullet.global_transform = $Gun/BulletSpawner.get_global_transform()
 	bullet.damage = 15
-	
-	
+
+
+func set_state_alert():
+	print("Here first")
+	state = ALERT
+	$GunTimer.start()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 	#$MeshInstance.mesh.material.set_shader_param("hitcolor",hitcolor)
 	#hitcolor = clamp(hitcolor + 0.5 * delta, 0.0, 1.0)
 	
 		
-
+func look_at_player():
+	$Gun.look_at(player.global_transform.origin,Vector3.UP)
+	var playerxz = Vector3(player.global_transform.origin.x,global_transform.origin.y,player.global_transform.origin.z)
+	look_at(playerxz,Vector3.UP)
 
 func _physics_process(delta):
-	var player_distance = $'../../../Player'.transform.origin - transform.origin
-	
+	if state != ALERT:
+		var player_dir = $'../../../Player'.transform.origin - transform.origin
+		if player_dir.length() < detection_radius:
+			player_dir = player_dir.normalized()
+			if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
+				set_state_alert()
 	match state:
 		IDLE:
 			pass
@@ -72,12 +85,8 @@ func _physics_process(delta):
 				if direction.length() < 1:
 					path_node += 1
 				else:
-					$Gun.look_at(player.global_transform.origin,Vector3.UP)
-					var playerxz = Vector3(player.global_transform.origin.x,global_transform.origin.y,player.global_transform.origin.z)
-					look_at(playerxz,Vector3.UP)
+					look_at_player()
 					velocity = direction.normalized() * speed
-		SHOOTING:
-			pass
 		SEARCHING:
 			pass
 	velocity.y += -40 * delta
@@ -87,10 +96,10 @@ func move_to(target_pos):
 	path = nav.get_simple_path(global_transform.origin, target_pos)
 	path_node = 0
 
-func _on_GunTimer_timeout():
-	if state == ALERT and player_visible:
-		shoot()
-
-
 func _on_MoveTimer_timeout():
 	move_to(player.global_transform.origin)
+
+
+func _on_GunTimer_timeout():
+	print("Here")
+	shoot()
