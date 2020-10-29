@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Gun.tscn" type="PackedScene" id=2]
@@ -28,6 +28,9 @@ height = 3.0
 [sub_resource type="RayShape" id=5]
 length = 3.46066
 
+[sub_resource type="RayShape" id=6]
+length = 20.7419
+
 [node name="Enemy" type="KinematicBody"]
 script = ExtResource( 1 )
 
@@ -53,6 +56,12 @@ autostart = true
 wait_time = 0.339
 autostart = true
 
+[node name="RayCastLineOfSight" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.862, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, 50 )
+collide_with_areas = true
+
 [node name="Gun" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.853, 0, -1.25021 )
 
@@ -65,15 +74,17 @@ transform = Transform( -7.87548e-08, 0, -1.8017, 0, 1.8017, 0, 1.8017, 0, -7.875
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 4 )
 
-[node name="RayCastLineOfSight" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.862, 0 )
-enabled = true
-cast_to = Vector3( 0, 0, 1 )
-collide_with_areas = true
-
 [node name="Area" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 5 )
+
+[node name="Area2" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area2"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="RayCastArray" type="Spatial" parent="."]
 [connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]

@@ -41,6 +41,8 @@ func hit(damage):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#transform.basis = Basis()
+	print($"/root/3DShooter/Player".transform.origin - transform.origin)
 	$RayCastLineOfSight.add_exception($EnemyHitDetector)
 
 func shoot():
@@ -59,18 +61,8 @@ func shoot():
 
 
 func _physics_process(delta):
-	var EnemyToPlayer = $"/root/3DShooter/Player".translation - translation
-	if EnemyToPlayer.length() < detection_radius:
-		$RayCastLineOfSight.cast_to = EnemyToPlayer
-		EnemyToPlayer = EnemyToPlayer.normalized()
-		if EnemyToPlayer.angle_to(-transform.basis.z) < deg2rad(field_of_view):
-			EnemyToPlayer = EnemyToPlayer * 30
-			var target = $RayCastLineOfSight.get_collider()
-			if target != null and target.name == "PlayerCollider":
-				player_visible = true
-				state = ALERT
-			else:
-				player_visible = false
+	var player_distance = $'../../../Player'.transform.origin - transform.origin
+	
 	match state:
 		IDLE:
 			pass
@@ -96,7 +88,7 @@ func move_to(target_pos):
 	path_node = 0
 
 func _on_GunTimer_timeout():
-	if state == ALERT:
+	if state == ALERT and player_visible:
 		shoot()
 
 

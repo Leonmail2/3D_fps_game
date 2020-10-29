@@ -166,15 +166,15 @@ material/0 = null
 shape = SubResource( 14 )
 
 [node name="Enemy4" parent="WorldGeometry/Navigation" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.595, 4.79509, -37.3932 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.595, 4.795, 12.0495 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62395, 2.61328, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7648, 2.61328, -17.9646 )
 health = 1085
 MAX_HEALTH = 1168
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, -0.331667, 0.943396, 0, -0.943396, -0.331667, 0, 31.47, -15.111 )
+transform = Transform( 0.872494, -0.229766, 0.431232, -0.196332, 0.643316, 0.739999, -0.447446, -0.730309, 0.516179, 0, 31.47, -15.111 )
 light_energy = 2.0
 shadow_enabled = true
 
