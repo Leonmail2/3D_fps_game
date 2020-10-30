@@ -258,3 +258,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.16889, 2.48274, 25.7653 )
 
 [node name="KillWall" parent="." instance=ExtResource( 6 )]
 transform = Transform( 5.96673, 0, 0, 0, 1, 0, 0, 0, 5.96673, 0, -19.5105, 0 )
+
+[node name="KillWall2" parent="." instance=ExtResource( 6 )]
+transform = Transform( 5.96673, 0, 0, 0, -0.5, 5.16734, 0, -0.866025, -2.98337, -4.23624, 52.989, -133.016 )
+
+[node name="KillWall3" parent="." instance=ExtResource( 6 )]
+transform = Transform( -2.24152e-07, 0.999915, -0.0777893, -1.33341e-07, 0.0130372, 5.96622, 5.96673, 3.78552e-08, 1.30407e-07, 129.453, 52.989, 6.22115 )
+
+[node name="KillWall4" parent="." instance=ExtResource( 6 )]
+transform = Transform( -5.96673, -8.15628e-08, -1.27007e-07, -1.33341e-07, 0.0130372, 5.96622, -4.84966e-07, 0.999915, -0.0777893, 3.6891, 52.989, 110.924 )
+
+[node name="KillWall5" parent="." instance=ExtResource( 6 )]
+transform = Transform( 4.76837e-07, -0.999915, 0.0777893, -1.33341e-07, 0.0130372, 5.96622, -5.96673, -8.9407e-08, -1.24797e-07, -140.942, 52.989, 52.5256 )

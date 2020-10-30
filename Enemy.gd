@@ -43,7 +43,6 @@ func hit(damage):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#transform.basis = Basis()
-	print($"/root/3DShooter/Player".transform.origin - transform.origin)
 	$RayCastLineOfSight.add_exception($EnemyHitDetector)
 	$RayCastLineOfSight.set_as_toplevel(true)
 	$GunTimer.wait_time = randf()+1
@@ -57,7 +56,6 @@ func shoot():
 
 
 func set_state_alert():
-	print("Here first")
 	state = ALERT
 	$GunTimer.start()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -80,8 +78,6 @@ func _physics_process(delta):
 			$RayCastLineOfSight.transform = $RayCastLineOfSight.transform.orthonormalized()
 			$RayCastLineOfSight.cast_to = Vector3(player_dir.x,player_dir.y,player_dir.z)
 			var object = $RayCastLineOfSight.get_collider()
-			if object != null:
-				print(object.name)
 			if object != null and object.name == "PlayerCollider":
 				player_dir = player_dir.normalized()
 				if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
@@ -111,5 +107,4 @@ func _on_MoveTimer_timeout():
 
 
 func _on_GunTimer_timeout():
-	print("Here")
 	shoot()

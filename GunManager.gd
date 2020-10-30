@@ -78,7 +78,7 @@ func shootShotgun():
 		shotgun_clip = clamp(shotgun_clip - 1,0,max_shotgun_clip)
 		updateAmmoHud()
 		$Shotgun/Shot.play()
-		$"../../../".velocity += $"../".global_transform.basis.z * 30
+		$"../../../".velocity += $"../".global_transform.basis.z * 45
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().hit(100)
 			$Timers/HitSoundDelay.start(0.15)

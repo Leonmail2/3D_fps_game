@@ -55,7 +55,6 @@ func get_movement_input():
 
 func _ready():
 	emit_signal("player_health_changed",health)
-	print(global_transform.origin)
 
 func _physics_process(delta):
 	check_health()
