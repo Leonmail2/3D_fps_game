@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Gun.gd" type="Script" id=2]
@@ -212,17 +212,14 @@ tracks/0/keys = PoolRealArray( 0, 1, -0.00831087, 0.0378786, -0.031013, -0.70710
 resource_name = "Shotgun|WalkCycle"
 length = 0.791667
 
-[sub_resource type="BoxShape" id=18]
-extents = Vector3( 0.75, 0.229, 0.75 )
-
-[sub_resource type="CapsuleShape" id=19]
+[sub_resource type="CapsuleShape" id=18]
 height = 2.04942
 
-[sub_resource type="CapsuleShape" id=20]
+[sub_resource type="CapsuleShape" id=19]
 radius = 1.32258
 height = 2.19577
 
-[sub_resource type="Shader" id=21]
+[sub_resource type="Shader" id=20]
 code = "shader_type canvas_item;
 uniform float frequency = 10;
 uniform float offset = 0.5;
@@ -238,15 +235,15 @@ void fragment(){
 	COLOR = vec4(texture(TEXTURE,UV).rgb,texture(TEXTURE,UV).a * (amplitude*sin(TIME*frequency)+offset)*flashing + (texture(TEXTURE,UV).a * x));
 }"
 
-[sub_resource type="ShaderMaterial" id=22]
-shader = SubResource( 21 )
+[sub_resource type="ShaderMaterial" id=21]
+shader = SubResource( 20 )
 shader_param/frequency = 10.0
 shader_param/offset = 0.5
 shader_param/amplitude = 0.2
 shader_param/flashing = 0.0
 shader_param/flash = 0.0
 
-[sub_resource type="CapsuleMesh" id=23]
+[sub_resource type="CapsuleMesh" id=22]
 mid_height = 2.121
 
 [node name="Player" type="KinematicBody"]
@@ -264,14 +261,14 @@ far = 1158.0
 
 [node name="GunManager" type="Spatial" parent="Head/Camera"]
 script = ExtResource( 12 )
-pistol_ammo = 125
+pistol_ammo = 127
 max_pistol_ammo = 127
 shotgun_ammo = 50
 
 [node name="RayCast" type="RayCast" parent="Head/Camera/GunManager"]
 transform = Transform( -1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0, 0 )
 enabled = true
-cast_to = Vector3( 0, -200, 0 )
+cast_to = Vector3( 0, -1000, 0 )
 collide_with_areas = true
 collide_with_bodies = false
 
@@ -381,19 +378,15 @@ one_shot = true
 transform = Transform( -0.866025, 0.5, -7.57103e-08, 0.5, 0.866025, 4.37114e-08, 8.74228e-08, 0, -1, 0, 0.674407, 0 )
 far = 1004.1
 
-[node name="GroundCollider" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -1, -4.37114e-08, 0, 4.37114e-08, -1, 0, -2.13994, 0 )
-shape = SubResource( 18 )
-
 [node name="PhysicalCollider" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0 )
-shape = SubResource( 19 )
+shape = SubResource( 18 )
 
 [node name="PlayerCollider" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerCollider"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00189114, -0.0605719, -0.000198103 )
-shape = SubResource( 20 )
+shape = SubResource( 19 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
@@ -407,7 +400,7 @@ __meta__ = {
 
 [node name="Blood" type="TextureRect" parent="HUD/Data"]
 modulate = Color( 1, 0, 0, 1 )
-material = SubResource( 22 )
+material = SubResource( 21 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 7 )
@@ -454,7 +447,7 @@ script = ExtResource( 5 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 visible = false
-mesh = SubResource( 23 )
+mesh = SubResource( 22 )
 material/0 = null
 [connection signal="player_health_changed" from="." to="HUD" method="_on_Player_player_health_changed"]
 [connection signal="player_just_damaged" from="." to="HUD" method="_on_Player_player_just_damaged"]

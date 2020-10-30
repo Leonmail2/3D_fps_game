@@ -26,8 +26,9 @@ margin = 0.065
 radius = 1.5
 height = 3.0
 
-[sub_resource type="RayShape" id=5]
-length = 3.46066
+[sub_resource type="CapsuleShape" id=5]
+radius = 2.28908
+height = 1.40379
 
 [node name="Enemy" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -66,15 +67,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.853, 0, -1.25021 )
 transform = Transform( -7.87548e-08, 0, -1.8017, 0, 1.8017, 0, 1.8017, 0, -7.87548e-08, -0.000112295, 0.145123, -0.592498 )
 
 [node name="Gun" parent="Gun/BulletSpawner" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
-[node name="Collider" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 4 )
-
-[node name="Area" type="Area" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
+[node name="PhysicalCollider" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0.108825, 0 )
 shape = SubResource( 5 )
 [connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]

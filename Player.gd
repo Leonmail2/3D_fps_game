@@ -61,7 +61,6 @@ func _physics_process(delta):
 	check_health()
 	if health != 0:
 		movement = get_movement_input()
-
 		velocity.y += gravity * delta
 		if is_on_floor():
 			if velocity.x < 1.5 and velocity.x > -1.5 and velocity.z < 1.5 and velocity.z > -1.5:

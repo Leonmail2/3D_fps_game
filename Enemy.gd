@@ -14,7 +14,7 @@ enum {
 export var state = IDLE
 var player_visible = true
 export var detection_radius = 30
-export var field_of_view = 40
+export var field_of_view = 50
 
 export var enemy_type = "Dummy"
 export var health = 100
@@ -45,7 +45,9 @@ func _ready():
 	#transform.basis = Basis()
 	print($"/root/3DShooter/Player".transform.origin - transform.origin)
 	$RayCastLineOfSight.add_exception($EnemyHitDetector)
-	$GunTimer.wait_time = randf()+2
+	$RayCastLineOfSight.set_as_toplevel(true)
+	$GunTimer.wait_time = randf()+1
+	
 
 func shoot():
 	var bullet = preload("res://Bullet.tscn").instance()
@@ -73,9 +75,17 @@ func _physics_process(delta):
 	if state != ALERT:
 		var player_dir = $'../../../Player'.transform.origin - transform.origin
 		if player_dir.length() < detection_radius:
-			player_dir = player_dir.normalized()
-			if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
-				set_state_alert()
+			$RayCastLineOfSight.transform.origin = transform.origin
+			$RayCastLineOfSight.rotate_y(100*delta)
+			$RayCastLineOfSight.transform = $RayCastLineOfSight.transform.orthonormalized()
+			$RayCastLineOfSight.cast_to = Vector3(player_dir.x,player_dir.y,player_dir.z)
+			var object = $RayCastLineOfSight.get_collider()
+			if object != null:
+				print(object.name)
+			if object != null and object.name == "PlayerCollider":
+				player_dir = player_dir.normalized()
+				if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
+					set_state_alert()
 	match state:
 		IDLE:
 			pass
@@ -89,7 +99,7 @@ func _physics_process(delta):
 					velocity = direction.normalized() * speed
 		SEARCHING:
 			pass
-	velocity.y += -40 * delta
+	velocity.y += -30 * delta
 	velocity = move_and_slide(velocity,Vector3.UP)
 
 func move_to(target_pos):
