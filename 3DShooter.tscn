@@ -112,6 +112,7 @@ navmesh = SubResource( 1 )
 
 [node name="Floor" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( 39.2027, 0, 0, 0, 0.428481, 0, 0, 0, 61.8792, -0.00883675, -0.446826, 8.67228 )
+layers = 3
 mesh = SubResource( 3 )
 material/0 = null
 
@@ -122,6 +123,7 @@ shape = SubResource( 4 )
 
 [node name="Wall2" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -21.1673, 9.12469, 34.265 )
+layers = 3
 mesh = SubResource( 7 )
 material/0 = null
 
@@ -132,6 +134,7 @@ shape = SubResource( 8 )
 
 [node name="Wall" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.787, 8.96664, 23.5205 )
+layers = 3
 mesh = SubResource( 7 )
 material/0 = null
 
@@ -142,6 +145,7 @@ shape = SubResource( 9 )
 
 [node name="Wall4" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 24.5084, 8.96664, 29.1411 )
+layers = 3
 mesh = SubResource( 7 )
 material/0 = null
 
@@ -162,6 +166,7 @@ shape = SubResource( 11 )
 
 [node name="Wall8" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14.7564, 8.96664, -38.7075 )
+layers = 3
 mesh = SubResource( 7 )
 material/0 = null
 
@@ -172,6 +177,7 @@ shape = SubResource( 11 )
 
 [node name="Wall5" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( 1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -21.1673, 17.806, 24.1449 )
+layers = 3
 mesh = SubResource( 7 )
 material/0 = null
 
@@ -182,6 +188,7 @@ shape = SubResource( 12 )
 
 [node name="Wall6" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( 1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 50.2922, 12.1425, 45.2265 )
+layers = 3
 mesh = SubResource( 7 )
 material/0 = null
 
@@ -192,6 +199,7 @@ shape = SubResource( 13 )
 
 [node name="Wall7" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( -0.298425, 5.67559e-08, 0.954433, 0.954433, -4.17196e-08, 0.298425, 5.67559e-08, 1, -4.17196e-08, 7.58806, 1.872, 45.9017 )
+layers = 3
 mesh = SubResource( 14 )
 material/0 = null
 
@@ -202,6 +210,7 @@ shape = SubResource( 15 )
 
 [node name="MeshInstance" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( 0.956646, -0.291253, 0, 0.291253, 0.956646, 0, 0, 0, 1, 11.1173, 4.49276, 37.6339 )
+layers = 3
 mesh = SubResource( 16 )
 material/0 = null
 
@@ -212,6 +221,7 @@ shape = SubResource( 17 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="WorldGeometry/Navigation/NavigationMeshInstance"]
 transform = Transform( 0.956646, -0.291253, 0, 0.291253, 0.956646, 0, 0, 0, 1, 11.1173, 4.49276, 54.1393 )
+layers = 3
 mesh = SubResource( 16 )
 material/0 = null
 

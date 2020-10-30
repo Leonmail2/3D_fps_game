@@ -270,7 +270,6 @@ transform = Transform( -1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74
 enabled = true
 cast_to = Vector3( 0, -1000, 0 )
 collide_with_areas = true
-collide_with_bodies = false
 
 [node name="Gun" type="Spatial" parent="Head/Camera/GunManager"]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.448364, -0.202282, -0.769594 )

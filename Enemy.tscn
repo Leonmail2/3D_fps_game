@@ -31,6 +31,7 @@ radius = 2.28908
 height = 1.40379
 
 [node name="Enemy" type="KinematicBody"]
+collision_layer = 2
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
