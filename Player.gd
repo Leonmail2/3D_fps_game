@@ -43,13 +43,13 @@ func get_movement_input():
 	movement = Vector3()
 	var camera_basis = $Head.get_global_transform().basis
 	if(Input.is_action_pressed("ui_up")):
-		movement -= camera_basis.z;
-	if(Input.is_action_pressed("ui_down")):
 		movement += camera_basis.z;
+	if(Input.is_action_pressed("ui_down")):
+		movement -= camera_basis.z;
 	if(Input.is_action_pressed("ui_left")):
-		movement -= get_global_transform().basis.x;
-	if(Input.is_action_pressed("ui_right")):
 		movement += get_global_transform().basis.x;
+	if(Input.is_action_pressed("ui_right")):
+		movement -= get_global_transform().basis.x;
 	$Head/Camera/GunManager.movement = movement.normalized()
 	return movement.normalized()
 
@@ -79,7 +79,7 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventMouseMotion:
 		camera_direction.x += -event.relative.x*mouse_sensitivity
-		camera_direction.y += -event.relative.y*mouse_sensitivity
+		camera_direction.y += event.relative.y*mouse_sensitivity
 		camera_direction.y = clamp(camera_direction.y,-1.5,1.55)
 		transform.basis = Basis()
 		$Head/Camera.transform.basis = Basis()
