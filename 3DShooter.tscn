@@ -62,37 +62,42 @@ environment = SubResource( 2 )
 
 [node name="Navigation" type="Navigation" parent="Level01"]
 
-[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Level01/Navigation"]
+[node name="NavMesh" type="NavigationMeshInstance" parent="Level01/Navigation"]
 navmesh = SubResource( 3 )
 
-[node name="Cube" type="MeshInstance" parent="Level01/Navigation/NavigationMeshInstance"]
+[node name="Cube" type="MeshInstance" parent="Level01/Navigation/NavMesh"]
 transform = Transform( 1.97777, 0, 0, 0, 1.97777, 0, 0, 0, 1.97777, -0.0143051, 0.108223, 0.000526428 )
 use_in_baked_light = true
 mesh = SubResource( 4 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="Level01/Navigation/NavigationMeshInstance/Cube"]
+[node name="StaticBody" type="StaticBody" parent="Level01/Navigation/NavMesh/Cube"]
 
-[node name="CollisionShape" type="CollisionShape" parent="Level01/Navigation/NavigationMeshInstance/Cube/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Level01/Navigation/NavMesh/Cube/StaticBody"]
 shape = SubResource( 5 )
 
-[node name="Cover2" parent="Level01/Navigation/NavigationMeshInstance" instance=ExtResource( 4 )]
+[node name="Cover" type="Spatial" parent="Level01/Navigation/NavMesh"]
+
+[node name="Cover2" parent="Level01/Navigation/NavMesh/Cover" instance=ExtResource( 4 )]
 transform = Transform( -1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, -1, 8.02607, -58.5496, 24.6508 )
 
-[node name="Cover3" parent="Level01/Navigation/NavigationMeshInstance" instance=ExtResource( 4 )]
+[node name="Cover3" parent="Level01/Navigation/NavMesh/Cover" instance=ExtResource( 4 )]
 transform = Transform( -0.986138, 0, -0.165926, 0, 1, 0, 0.165926, 0, -0.986138, 17.2229, -58.5496, 41.4957 )
 
-[node name="Cover4" parent="Level01/Navigation/NavigationMeshInstance" instance=ExtResource( 4 )]
+[node name="Cover4" parent="Level01/Navigation/NavMesh/Cover" instance=ExtResource( 4 )]
 transform = Transform( -0.986138, 0, -0.165926, 0, 1, 0, 0.165926, 0, -0.986138, 17.2229, -58.5496, 10.0583 )
 
 [node name="Enemy" parent="Level01/Navigation" instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 31.683, -49.7958, 47.232 )
+cover_node_loc = "../NavMesh/Cover/Cover2"
 
 [node name="Enemy2" parent="Level01/Navigation" instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 31.683, -49.7958, 34.6287 )
+cover_node_loc = "../NavMesh/Cover/Cover3"
 
 [node name="Enemy3" parent="Level01/Navigation" instance=ExtResource( 1 )]
 transform = Transform( -0.517176, 0, 0.855879, 0, 1, 0, -0.855879, 0, -0.517176, 21.683, -55.0788, 12.4138 )
+cover_node_loc = "../NavMesh/Cover/Cover4"
 
 [node name="Position3D" type="Position3D" parent="Level01"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.1437, -45.9462, 150.719 )

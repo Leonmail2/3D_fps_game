@@ -53,7 +53,7 @@ wait_time = 0.1
 wait_time = 0.661
 
 [node name="MoveTimer" type="Timer" parent="."]
-wait_time = 0.339
+wait_time = 0.12
 autostart = true
 
 [node name="RayCastLineOfSight" type="RayCast" parent="."]
