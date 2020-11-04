@@ -16,8 +16,8 @@ export var state = IDLE
 var player_visible = true
 export var detection_radius = 100
 export var field_of_view = 60
-#export var cover_node_loc = "../NavMesh/Cover/"
-#onready var cover = get_node(cover_node_loc)
+export var cover_node_loc = "../NavMesh/Cover/"
+onready var cover = get_node(cover_node_loc)
 
 export var enemy_type = "Dummy"
 export var health = 100
@@ -62,6 +62,9 @@ func set_state(new_state):
 	if new_state == ALERT:
 		state = ALERT
 		$GunTimer.start()
+	if new_state == SEARCHING_COVER:
+		state = SEARCHING_COVER
+		$GunTimer.stop()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -83,7 +86,7 @@ func _physics_process(delta):
 			if object != null and object.name == "PlayerCollider":
 				player_dir = player_dir.normalized()
 				if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
-					set_state(ALERT)
+					set_state(SEARCHING_COVER)
 	match state:
 		IDLE:
 			pass
@@ -95,14 +98,15 @@ func _physics_process(delta):
 				else:
 					look_at_player()
 					velocity = direction.normalized() * speed
-		#SEARCHING_COVER:
-		#	if path_node < path.size():
-		#		var direction = (path[path_node]-global_transform.origin)
-		#		if direction.length() < 1:
-		#			path_node += 1
-		#		else:
-		#			look_at_player()
-		#			velocity = direction.normalized() * speed
+		SEARCHING_COVER:
+			
+			if path_node < path.size():
+				var direction = (path[path_node]-global_transform.origin)
+				if direction.length() < 1:
+					path_node += 1
+				else:
+					look_at_player()
+					velocity = direction.normalized() * speed
 	velocity.y += -30 * delta
 	velocity = move_and_slide(velocity,Vector3.UP)
 
@@ -113,8 +117,8 @@ func move_to(target_pos):
 func _on_MoveTimer_timeout():
 	if state == ALERT:
 		move_to(player.global_transform.origin)
-	#elif state == SEARCHING_COVER:
-	#	move_to(cover.global_transform.origin)
+	elif state == SEARCHING_COVER:
+		move_to(cover.global_transform.origin)
 
 func _on_GunTimer_timeout():
 	shoot()
