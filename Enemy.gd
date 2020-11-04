@@ -8,13 +8,14 @@ enum {
 	IDLE = 0,
 	ALERT = 1,
 	SHOOTING = 2,
-	SEARCHING = 3,
+	SEARCHING_COVER = 3,
+	IN_COVER = 4,
 }
 
 export var state = IDLE
 var player_visible = true
 export var detection_radius = 30
-export var field_of_view = 50
+export var field_of_view = 60
 
 export var enemy_type = "Dummy"
 export var health = 100
@@ -38,14 +39,14 @@ func hit(damage):
 	#hitcolor = 0.0
 	if health == 0:
 		die()
-	set_state_alert()
+	set_state(ALERT)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#transform.basis = Basis()
 	$RayCastLineOfSight.add_exception($EnemyHitDetector)
 	$RayCastLineOfSight.set_as_toplevel(true)
-	$GunTimer.wait_time = randf()+1
+	$GunTimer.wait_time = randf()+0.2
 	
 
 func shoot():
@@ -55,9 +56,11 @@ func shoot():
 	bullet.damage = 15
 
 
-func set_state_alert():
-	state = ALERT
-	$GunTimer.start()
+func set_state(new_state):
+	if new_state == ALERT:
+		state = ALERT
+		$GunTimer.start()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 	#$MeshInstance.mesh.material.set_shader_param("hitcolor",hitcolor)
@@ -73,15 +76,12 @@ func _physics_process(delta):
 	if state != ALERT:
 		var player_dir = $'../../../Player'.transform.origin - transform.origin
 		if player_dir.length() < detection_radius:
-			$RayCastLineOfSight.transform.origin = transform.origin
-			$RayCastLineOfSight.rotate_y(100*delta)
-			$RayCastLineOfSight.transform = $RayCastLineOfSight.transform.orthonormalized()
-			$RayCastLineOfSight.cast_to = Vector3(player_dir.x,player_dir.y,player_dir.z)
+			$RayCastLineOfSight.look_at_from_position(transform.origin,$'../../../Player'.global_transform.origin,Vector3.UP)
 			var object = $RayCastLineOfSight.get_collider()
 			if object != null and object.name == "PlayerCollider":
 				player_dir = player_dir.normalized()
 				if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
-					set_state_alert()
+					set_state(ALERT)
 	match state:
 		IDLE:
 			pass
@@ -93,8 +93,6 @@ func _physics_process(delta):
 				else:
 					look_at_player()
 					velocity = direction.normalized() * speed
-		SEARCHING:
-			pass
 	velocity.y += -30 * delta
 	velocity = move_and_slide(velocity,Vector3.UP)
 
@@ -103,7 +101,8 @@ func move_to(target_pos):
 	path_node = 0
 
 func _on_MoveTimer_timeout():
-	move_to(player.global_transform.origin)
+	if state == ALERT:
+		move_to(player.global_transform.origin)
 
 
 func _on_GunTimer_timeout():

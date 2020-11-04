@@ -215,14 +215,14 @@ length = 0.791667
 [sub_resource type="CapsuleShape" id=18]
 height = 2.04942
 
-[sub_resource type="BoxShape" id=23]
+[sub_resource type="BoxShape" id=19]
 extents = Vector3( 1, 1, 0.188337 )
 
-[sub_resource type="CapsuleShape" id=19]
+[sub_resource type="CapsuleShape" id=20]
 radius = 1.32258
 height = 2.19577
 
-[sub_resource type="Shader" id=20]
+[sub_resource type="Shader" id=21]
 code = "shader_type canvas_item;
 uniform float frequency = 10;
 uniform float offset = 0.5;
@@ -238,15 +238,15 @@ void fragment(){
 	COLOR = vec4(texture(TEXTURE,UV).rgb,texture(TEXTURE,UV).a * (amplitude*sin(TIME*frequency)+offset)*flashing + (texture(TEXTURE,UV).a * x));
 }"
 
-[sub_resource type="ShaderMaterial" id=21]
-shader = SubResource( 20 )
+[sub_resource type="ShaderMaterial" id=22]
+shader = SubResource( 21 )
 shader_param/frequency = 10.0
 shader_param/offset = 0.5
 shader_param/amplitude = 0.2
 shader_param/flashing = 0.0
 shader_param/flash = 0.0
 
-[sub_resource type="CapsuleMesh" id=22]
+[sub_resource type="CapsuleMesh" id=23]
 mid_height = 2.121
 
 [node name="Player" type="KinematicBody"]
@@ -264,7 +264,6 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0
 script = ExtResource( 12 )
 pistol_ammo = 127
 max_pistol_ammo = 127
-shotgun_ammo = 50
 
 [node name="RayCast" type="RayCast" parent="Head/Camera/GunManager"]
 transform = Transform( -1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0, 0 )
@@ -390,13 +389,13 @@ shape = SubResource( 18 )
 
 [node name="PhysicalCollider2" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -2.20733, 0 )
-shape = SubResource( 23 )
+shape = SubResource( 19 )
 
 [node name="PlayerCollider" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerCollider"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00189114, -0.0605719, -0.000198103 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
@@ -410,7 +409,7 @@ __meta__ = {
 
 [node name="Blood" type="TextureRect" parent="HUD/Data"]
 modulate = Color( 1, 0, 0, 1 )
-material = SubResource( 21 )
+material = SubResource( 22 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 7 )
@@ -457,7 +456,7 @@ script = ExtResource( 5 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 visible = false
-mesh = SubResource( 22 )
+mesh = SubResource( 23 )
 material/0 = null
 [connection signal="player_health_changed" from="." to="HUD" method="_on_Player_player_health_changed"]
 [connection signal="player_just_damaged" from="." to="HUD" method="_on_Player_player_just_damaged"]

@@ -50,16 +50,17 @@ shape = SubResource( 4 )
 wait_time = 0.1
 
 [node name="GunTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 0.661
 
 [node name="MoveTimer" type="Timer" parent="."]
 wait_time = 0.339
 autostart = true
 
 [node name="RayCastLineOfSight" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.862, 0 )
+transform = Transform( 1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 1.862, 0 )
 enabled = true
-cast_to = Vector3( 0, 0, 50 )
+cast_to = Vector3( 0, 0, -100 )
+collision_mask = 7
 collide_with_areas = true
 
 [node name="Gun" type="Spatial" parent="."]
