@@ -25,14 +25,29 @@ data = PoolVector3Array( -0.3576, 2.3362, 2.2234, 0.3191, 2.8391, -0.6277, 0.319
 script = ExtResource( 1 )
 
 [node name="Cube" type="MeshInstance" parent="."]
-transform = Transform( 1.75131, 0, 0, 0, 1.75131, 0, 0, 0, 1.75131, 3.69827, -0.14787, 0 )
+transform = Transform( 1.751, 0, 0, 0, 1.751, 0, 0, 0, 1.376, 2.05232, -2.51262, 0 )
+layers = 7
 mesh = SubResource( 1 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Cube"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="Cube/StaticBody"]
 shape = SubResource( 2 )
 
 [node name="CoverPosition" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77249, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03752, -1.08377, 0 )
+
+[node name="CoverRight" type="Position3D" parent="."]
+transform = Transform( 7.87816e-08, 2.3154e-09, -1, 0.258819, 0.965926, 2.26267e-08, 0.965926, -0.258819, 7.54979e-08, -1.03699, 0, -4.7063 )
+
+[node name="RayCast" type="RayCast" parent="CoverRight"]
+cast_to = Vector3( 0, 0, -200 )
+
+[node name="CoverLeft" type="Position3D" parent="."]
+transform = Transform( 8.17097e-08, -1.32432e-08, -1, -0.258819, 0.965926, -3.394e-08, 0.965926, 0.258819, 7.54979e-08, -1.03087, -0.0599513, 4.27844 )
+
+[node name="RayCast" type="RayCast" parent="CoverLeft"]
+cast_to = Vector3( 0, 0, -200 )

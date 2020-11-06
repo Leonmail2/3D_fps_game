@@ -68,7 +68,7 @@ func shootPistol():
 		updateAmmoHud()
 		$Gun/Shot.play()
 		if(target != null and target.name == "EnemyHitDetector"):
-			target.get_parent_spatial().hit(34)
+			target.get_parent_spatial().get_parent().hit(34)
 			$Timers/HitSoundDelay.start(0.11)
 
 func shootShotgun():
@@ -80,7 +80,7 @@ func shootShotgun():
 		$Shotgun/Shot.play()
 		$"../../../".velocity += $"../".global_transform.basis.z * -45
 		if(target != null and target.name == "EnemyHitDetector"):
-			target.get_parent_spatial().hit(100)
+			target.get_parent_spatial().get_parent().hit(100)
 			$Timers/HitSoundDelay.start(0.15)
 		
 
@@ -214,6 +214,8 @@ func _process(delta):
 			if Input.is_mouse_button_pressed(BUTTON_LEFT):
 				gunHandler("Shoot")
 			elif play_walk_anim:
+				animationHandler("Running")
+			elif $"../../../".air_time > 0.1:
 				animationHandler("Running")
 			else:
 				animationHandler("Idle")

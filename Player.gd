@@ -13,6 +13,7 @@ export var DEACCELERATION = 10;
 export var gravity = -50
 export var mouse_sensitivity = 0.001;
 
+var air_time = 0
 var velocity = Vector3.ZERO
 var movement = Vector3()
 var camera_direction = Vector2()
@@ -73,7 +74,10 @@ func _physics_process(delta):
 		if is_on_floor() and Input.is_key_pressed(KEY_SPACE):
 			velocity.y = 25
 		velocity = move_and_slide(velocity,Vector3.UP)
-		
+		if is_on_floor():
+			air_time = 0
+		else:
+			air_time += delta
 		
 	
 func _input(event):

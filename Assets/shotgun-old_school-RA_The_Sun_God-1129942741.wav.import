@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/shotgun-old_school-RA_The_Sun_God-1129942741.wav-24fbe30759fabbaee9bca16827683b8d.sample"
+
+[deps]
+
+source_file="res://Assets/shotgun-old_school-RA_The_Sun_God-1129942741.wav"
+dest_files=[ "res://.import/shotgun-old_school-RA_The_Sun_God-1129942741.wav-24fbe30759fabbaee9bca16827683b8d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

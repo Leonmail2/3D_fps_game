@@ -392,6 +392,7 @@ transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -2.20733, 0 )
 shape = SubResource( 19 )
 
 [node name="PlayerCollider" type="Area" parent="."]
+collision_layer = 17
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerCollider"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00189114, -0.0605719, -0.000198103 )
