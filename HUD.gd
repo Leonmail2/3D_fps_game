@@ -13,6 +13,9 @@ var blood_flash = 0
 func _ready():
 	pass # Replace with function body.
 
+func update_charge_bar(charge):
+	$Data/ChargeBar.value = charge
+
 func update_health(health):
 	$Data/Health.text = str(health)
 	if health > 40:

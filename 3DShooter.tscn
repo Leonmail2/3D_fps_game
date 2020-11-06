@@ -68,12 +68,13 @@ navmesh = SubResource( 3 )
 
 [node name="Cube" type="MeshInstance" parent="Level01/Navigation/NavMesh"]
 transform = Transform( 1.97777, 0, 0, 0, 1.97777, 0, 0, 0, 1.97777, -0.0143051, 0.108223, 0.000526428 )
-layers = 9
 use_in_baked_light = true
 mesh = SubResource( 4 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="Level01/Navigation/NavMesh/Cube"]
+collision_layer = 9
+collision_mask = 9
 
 [node name="CollisionShape" type="CollisionShape" parent="Level01/Navigation/NavMesh/Cube/StaticBody"]
 shape = SubResource( 5 )

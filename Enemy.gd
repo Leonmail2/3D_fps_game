@@ -35,15 +35,22 @@ onready var hitDetector = $EnemyElements/EnemyHitDetector
 
 var velocity = Vector3()
 
-func die():
+func die(vector):
+	var body = $EnemyElements/RigidBody
+	var trans = body.get_global_transform()
+	$EnemyElements.remove_child($EnemyElements/RigidBody)
+	get_node("../../../").add_child(body)
+	body.linear_velocity = vector - Vector3(0,20,0)
+	body.angular_velocity = Vector3()
+	body.global_transform = trans
 	queue_free()
 
-func hit(damage):
+func hit(damage,vector):
 	health = clamp(health - damage,0,100)
 	print(health)
 	#hitcolor = 0.0
 	if health == 0:
-		die()
+		die(vector)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -75,11 +82,11 @@ func set_state(new_state):
 		$GunTimer.stop()
 		state = IN_COVER
 		velocity = Vector3()
-		$CoverTimer.start()
+		$CoverTimer.start(2+rand_range(0.0,2.0))
 		print("here")
 	if new_state == SHOOTING_COVER:
 		$GunTimer.start(0.2)
-		$ShootingTimer.start()
+		$ShootingTimer.start(1+rand_range(0.0,0.5))
 		state = SHOOTING_COVER
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -94,48 +101,47 @@ func look_at_player():
 	look_at(playerxz,Vector3.UP)
 
 func _physics_process(delta):
-	if state == IDLE:
-		var player_dir = player.transform.origin - transform.origin
-		if player_dir.length() < detection_radius:
-			raycastSight.look_at_from_position(transform.origin,player.global_transform.origin,Vector3.UP)
-			var object = raycastSight.get_collider()
-			if object != null and object.name == "PlayerCollider":
-				player_dir = player_dir.normalized()
-				if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
-					set_state(SEARCHING_COVER)
-	match state:
-		IDLE:
-			pass
-		ALERT:
-			if path_node < path.size():
-				var direction = (path[path_node]-global_transform.origin)
-				if direction.length() < 1:
-					path_node += 1
-				else:
-					look_at_player()
-					velocity = direction.normalized() * speed
-			$EnemyElements.global_transform = $EnemyElements.global_transform.interpolate_with($PositionCenter.global_transform,10*delta)			
-		SEARCHING_COVER:
-			if path_node < path.size():
-				var direction = (path[path_node]-global_transform.origin)
-				if direction.length() < 1:
-					path_node += 1
-				else:
-					look_at_player()
-					velocity = direction.normalized() * speed
-				if (cover.transform.origin - transform.origin).length() < 3:
-					set_state(IN_COVER)
-		IN_COVER:
-			look_at_player()
-			raycastSight.look_at_from_position(transform.origin,player.global_transform.origin,Vector3.UP)
-			$EnemyElements.global_transform = $EnemyElements.global_transform.interpolate_with($PositionCenter.global_transform,5*delta)
-		SHOOTING_COVER:
-			look_at_player()
-			$EnemyElements.global_transform = $EnemyElements.global_transform.interpolate_with(cover.get_node("CoverRight").global_transform,5*delta)
-	velocity.y += -30 * delta
-	velocity = move_and_slide(velocity,Vector3.UP)
-	if health < 40:
-		set_state(ALERT)
+	if health > 0:
+		match state:
+			IDLE:
+				var player_dir = player.transform.origin - transform.origin
+				if player_dir.length() < detection_radius:
+					raycastSight.look_at_from_position(transform.origin,player.global_transform.origin,Vector3.UP)
+					var object = raycastSight.get_collider()
+					if object != null and object.name == "PlayerCollider":
+						player_dir = player_dir.normalized()
+						if rad2deg(acos(player_dir.dot(-transform.basis.z)))<field_of_view:
+							set_state(SEARCHING_COVER)
+			ALERT:
+				if path_node < path.size():
+					var direction = (path[path_node]-global_transform.origin)
+					if direction.length() < 1:
+						path_node += 1
+					else:
+						look_at_player()
+						velocity = direction.normalized() * speed
+				$EnemyElements.global_transform = $EnemyElements.global_transform.interpolate_with($PositionCenter.global_transform,10*delta)			
+			SEARCHING_COVER:
+				if path_node < path.size():
+					var direction = (path[path_node]-global_transform.origin)
+					if direction.length() < 1:
+						path_node += 1
+					else:
+						look_at_player()
+						velocity = direction.normalized() * speed
+					if (cover.transform.origin - transform.origin).length() < 3:
+						set_state(IN_COVER)
+			IN_COVER:
+				look_at_player()
+				raycastSight.look_at_from_position(transform.origin,player.global_transform.origin,Vector3.UP)
+				$EnemyElements.global_transform = $EnemyElements.global_transform.interpolate_with($PositionCenter.global_transform,5*delta)
+			SHOOTING_COVER:
+				look_at_player()
+				$EnemyElements.global_transform = $EnemyElements.global_transform.interpolate_with(cover.get_node("CoverRight").global_transform,5*delta)
+		velocity.y += -30 * delta
+		velocity = move_and_slide(velocity,Vector3.UP)
+		if health < 40:
+			set_state(ALERT)
 
 func move_to(target_pos):
 	path = nav.get_simple_path(global_transform.origin, target_pos)

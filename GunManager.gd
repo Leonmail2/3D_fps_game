@@ -20,7 +20,7 @@ var current_state = "Idle"
 var anim_state = ""
 var current_animation = animationStates[current_state][current_weapon]
 var can_shoot = true
-
+var guns_enabled = true
 
 var pistol_clip = 15
 export var max_pistol_clip = 15
@@ -68,7 +68,7 @@ func shootPistol():
 		updateAmmoHud()
 		$Gun/Shot.play()
 		if(target != null and target.name == "EnemyHitDetector"):
-			target.get_parent_spatial().get_parent().hit(34)
+			target.get_parent_spatial().get_parent().hit(34,-get_node("../PlayerCamera").global_transform.basis.z*10)
 			$Timers/HitSoundDelay.start(0.11)
 
 func shootShotgun():
@@ -80,7 +80,7 @@ func shootShotgun():
 		$Shotgun/Shot.play()
 		$"../../../".velocity += $"../".global_transform.basis.z * -45
 		if(target != null and target.name == "EnemyHitDetector"):
-			target.get_parent_spatial().get_parent().hit(100)
+			target.get_parent_spatial().get_parent().hit(100,-get_node("../PlayerCamera").global_transform.basis.z*20)
 			$Timers/HitSoundDelay.start(0.15)
 		
 
@@ -206,7 +206,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-		if health > 0:
+		if health > 0 and guns_enabled == true:
+			show()
 			get_keyboard_input()
 			play_walk_anim = false
 			if movement.x != 0 or movement.z != 0:
@@ -219,3 +220,5 @@ func _process(delta):
 				animationHandler("Running")
 			else:
 				animationHandler("Idle")
+		else:
+			hide()

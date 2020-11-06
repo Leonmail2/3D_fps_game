@@ -18,6 +18,10 @@ var velocity = Vector3.ZERO
 var movement = Vector3()
 var camera_direction = Vector2()
 
+var charge_target = null
+var charging = false
+var charge_cooldown = 100
+
 func die():
 	health = 0
 	$Head/DeathCamera.current = true
@@ -60,28 +64,53 @@ func _ready():
 func _physics_process(delta):
 	check_health()
 	if health != 0:
-		movement = get_movement_input()
-		velocity.y += gravity * delta
-		if is_on_floor():
-			if velocity.x < 1.5 and velocity.x > -1.5 and velocity.z < 1.5 and velocity.z > -1.5:
-				velocity.x = 0
-				velocity.z = 0
-				velocity.y = 0
-			if movement != Vector3(0,0,0):
-				velocity = lerp(velocity,movement*PLAYER_SPEED,delta*ACCELERATION)
+		if charging == false:
+			charge_cooldown = clamp(charge_cooldown+(delta*10),0,100)
+			$HUD.update_charge_bar(charge_cooldown)
+			movement = get_movement_input()
+			velocity.y += gravity * delta
+			if is_on_floor():
+				if velocity.x < 1.5 and velocity.x > -1.5 and velocity.z < 1.5 and velocity.z > -1.5:
+					velocity.x = 0
+					velocity.z = 0
+					velocity.y = 0
+				if movement != Vector3(0,0,0):
+					velocity = lerp(velocity,movement*PLAYER_SPEED,delta*ACCELERATION)
+				else:
+					velocity = lerp(velocity,movement*PLAYER_SPEED,delta*DEACCELERATION)
+			if is_on_floor() and Input.is_key_pressed(KEY_SPACE):
+				velocity.y = 25
+			velocity = move_and_slide(velocity,Vector3.UP)
+			if is_on_floor():
+				air_time = 0
 			else:
-				velocity = lerp(velocity,movement*PLAYER_SPEED,delta*DEACCELERATION)
-		if is_on_floor() and Input.is_key_pressed(KEY_SPACE):
-			velocity.y = 25
-		velocity = move_and_slide(velocity,Vector3.UP)
-		if is_on_floor():
-			air_time = 0
-		else:
-			air_time += delta
-		
-	
-func _input(event):
-	if event is InputEventMouseMotion:
+				air_time += delta
+		if Input.is_key_pressed(KEY_Q) and charge_cooldown == 100:
+			var cast = $Head/Camera/GunManager/RayCast.get_collider()
+			if cast != null and cast.name == "EnemyHitDetector":
+				$Head/Camera/GunManager.guns_enabled = false
+				$ChargeTimer.start()
+				charge_target = cast.get_parent().get_parent()
+				charging = true
+				charge_cooldown = 0
+		if charging == true:
+			$Head/Camera.look_at(charge_target.global_transform.origin,Vector3.UP)
+			$Head/Camera.rotate_object_local(Vector3(0,1,0), PI)
+			transform = transform.interpolate_with(charge_target.global_transform,6*delta)
+			if (charge_target.global_transform.origin - global_transform.origin).length() < 10:
+				charge_target.hit(3000,$Head/Camera.global_transform.basis.z * 50)
+				charging = false
+				charge_target = null
+				$Head/Camera/GunManager.guns_enabled = true
+
+func _on_ChargeTimer_timeout():
+	$Head/Camera/GunManager.guns_enabled = true
+	charging = false
+	charge_target = null
+	velocity = Vector3()
+
+func _input(event): 
+	if event is InputEventMouseMotion and charging == false:
 		camera_direction.x += -event.relative.x*mouse_sensitivity
 		camera_direction.y += event.relative.y*mouse_sensitivity
 		camera_direction.y = clamp(camera_direction.y,-1.5,1.55)
@@ -93,3 +122,5 @@ func _input(event):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+

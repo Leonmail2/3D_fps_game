@@ -408,11 +408,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ChargeBar" type="ProgressBar" parent="HUD/Data"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -329.5
+margin_right = 329.5
+margin_bottom = 41.0
+value = 100.0
+rounded = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Blood" type="TextureRect" parent="HUD/Data"]
 modulate = Color( 1, 0, 0, 1 )
 material = SubResource( 22 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -2.9364
+margin_right = -2.9364
 texture = ExtResource( 7 )
 expand = true
 __meta__ = {
@@ -459,6 +473,11 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0
 visible = false
 mesh = SubResource( 23 )
 material/0 = null
+
+[node name="ChargeTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 3.0
+one_shot = true
 [connection signal="player_health_changed" from="." to="HUD" method="_on_Player_player_health_changed"]
 [connection signal="player_just_damaged" from="." to="HUD" method="_on_Player_player_just_damaged"]
 [connection signal="ammo_change" from="Head/Camera/GunManager" to="HUD" method="_on_GunManager_ammo_change"]
@@ -467,3 +486,4 @@ material/0 = null
 [connection signal="timeout" from="Head/Camera/GunManager/Timers/ShotgunTimer" to="Head/Camera/GunManager" method="_on_ShotgunTimer_timeout"]
 [connection signal="timeout" from="Head/Camera/GunManager/Timers/ShotgunReloadTimer" to="Head/Camera/GunManager" method="_on_ShotgunReload_timeout"]
 [connection signal="timeout" from="Head/Camera/GunManager/Timers/HitSoundDelay" to="Head/Camera/GunManager" method="_on_HitSoundDelay_timeout"]
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
