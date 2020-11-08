@@ -21,6 +21,7 @@ var anim_state = ""
 var current_animation = animationStates[current_state][current_weapon]
 var can_shoot = true
 var guns_enabled = true
+var transitioning_between_weapons = false
 
 var pistol_clip = 15
 export var max_pistol_clip = 15
@@ -169,17 +170,37 @@ func showWeapon(weapon):
 		$Shotgun.show()
 
 func switchWeapons(new_weapon):
-	if reloading == false and anim_state == "":
+	if reloading == false and anim_state == "" and transitioning_between_weapons == false and new_weapon != current_weapon:
 		if new_weapon == "Pistol":
 			hideWeapon(current_weapon)
+			$Gun.transform.origin.y = get_node("../EquipPos").transform.origin.y
+			$Timers/EquipTimer.start()
+			transitioning_between_weapons = true
 			showWeapon(new_weapon)
 			current_weapon = "Pistol"
 			updateAmmoHud()
-		if new_weapon == "Shotgun":
+		elif new_weapon == "Shotgun":
 			hideWeapon(current_weapon)
+			$Shotgun.transform.origin.y = get_node("../EquipPos").transform.origin.y
+			$Timers/EquipTimer.start()
+			transitioning_between_weapons = true
 			showWeapon(new_weapon)
 			current_weapon = "Shotgun"
 			updateAmmoHud()
+
+func _on_EquipTimer_timeout():
+	transitioning_between_weapons = false
+	if current_weapon == "Shotgun":
+		$Shotgun.transform.origin.y = get_node("../HoldingPos").transform.origin.y
+	elif current_weapon == "Pistol":
+		$Gun.transform.origin.y = get_node("../HoldingPos").transform.origin.y
+
+
+func interpolate_weapon_equip(delta):
+	if current_weapon == "Shotgun":
+		$Shotgun.transform.origin.y = lerp(get_node("../EquipPos").transform.origin.y,get_node("../HoldingPos").transform.origin.y,5*(0.2-$Timers/EquipTimer.time_left))
+	elif current_weapon == "Pistol":
+		$Gun.transform.origin.y = lerp(get_node("../EquipPos").transform.origin.y,get_node("../HoldingPos").transform.origin.y,5*(0.2-$Timers/EquipTimer.time_left))
 
 func gunHandler(action,animation="Idle"):
 	if action == "Shoot":
@@ -208,22 +229,31 @@ func _ready():
 	$Shotgun.hide()
 	updateAmmoHud()
 
+func _physics_process(delta):
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 		if health > 0 and guns_enabled == true:
 			show()
-			get_keyboard_input()
+			if transitioning_between_weapons == false:
+				get_keyboard_input()
 			play_walk_anim = false
 			if movement.x != 0 or movement.z != 0:
 				play_walk_anim = true
 			if Input.is_mouse_button_pressed(BUTTON_LEFT):
-				gunHandler("Shoot")
+				if transitioning_between_weapons == false:
+					gunHandler("Shoot")
 			elif play_walk_anim:
 				animationHandler("Running")
 			elif $"../../../".air_time > 0.1:
 				animationHandler("Running")
 			else:
 				animationHandler("Idle")
+			if transitioning_between_weapons == true:
+				interpolate_weapon_equip(delta)
 		else:
 			hide()
+
+
+
