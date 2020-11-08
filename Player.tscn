@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Gun.gd" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://Assets/Gun body.material" type="Material" id=13]
 [ext_resource path="res://Assets/Aim Down Sights.material" type="Material" id=14]
 [ext_resource path="res://Assets/shotgun_fire.wav" type="AudioStream" id=15]
+[ext_resource path="res://Assets/HealEffect.png" type="Texture" id=16]
+[ext_resource path="res://Audio/NoAmmoGunClicks.wav" type="AudioStream" id=17]
 
 [sub_resource type="ArrayMesh" id=1]
 surfaces/0 = {
@@ -222,29 +224,62 @@ extents = Vector3( 1, 1, 0.188337 )
 radius = 1.32258
 height = 2.19577
 
-[sub_resource type="Shader" id=21]
-code = "shader_type canvas_item;
-uniform float frequency = 10;
-uniform float offset = 0.5;
-uniform float amplitude = 0.2;
-uniform float flashing = 0;
-uniform float flash = 0.0;
+[sub_resource type="Animation" id=21]
+resource_name = "BloodSplatter"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
-void fragment(){
-	float x = 0.001; 
-	if(flash > 0.1){
-		x = flash*0.01;
-	}
-	COLOR = vec4(texture(TEXTURE,UV).rgb,texture(TEXTURE,UV).a * (amplitude*sin(TIME*frequency)+offset)*flashing + (texture(TEXTURE,UV).a * x));
-}"
+[sub_resource type="Animation" id=22]
+resource_name = "Heal"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
-[sub_resource type="ShaderMaterial" id=22]
-shader = SubResource( 21 )
-shader_param/frequency = 10.0
-shader_param/offset = 0.5
-shader_param/amplitude = 0.2
-shader_param/flashing = 0.0
-shader_param/flash = 0.0
+[sub_resource type="Animation" id=24]
+resource_name = "HealingAnimation"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 2.21914 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8.48, 442 ), Vector2( 8.48, 442 ), Vector2( 8.48, 396 ) ]
+}
 
 [sub_resource type="CapsuleMesh" id=23]
 mid_height = 2.121
@@ -292,7 +327,9 @@ volume_db = 3.718
 
 [node name="Shot" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 9 )
-volume_db = -6.892
+
+[node name="NoAmmo" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
+stream = ExtResource( 17 )
 
 [node name="Reload" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 10 )
@@ -408,21 +445,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChargeBar" type="ProgressBar" parent="HUD/Data"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -329.5
-margin_right = 329.5
-margin_bottom = 41.0
-value = 100.0
-rounded = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Blood" type="TextureRect" parent="HUD/Data"]
-modulate = Color( 1, 0, 0, 1 )
-material = SubResource( 22 )
+modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -2.9364
@@ -433,10 +457,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Data/Blood"]
+anims/BloodSplatter = SubResource( 21 )
+
+[node name="Heal" type="TextureRect" parent="HUD/Data"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.936
+margin_top = -2.0
+margin_right = -2.93597
+margin_bottom = -2.0
+texture = ExtResource( 16 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Data/Heal"]
+anims/Heal = SubResource( 22 )
+
 [node name="Health" type="Label" parent="HUD/Data"]
 anchor_top = 1.0
-anchor_right = 0.015
 anchor_bottom = 1.0
+margin_left = 15.0
 margin_top = -76.0
 margin_right = 103.0
 custom_fonts/font = ExtResource( 8 )
@@ -448,16 +492,51 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Healing" type="Label" parent="HUD/Data"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_top = 0.956
+anchor_bottom = 1.0
+margin_left = 8.48
+margin_top = -131.6
+margin_right = 127.48
+margin_bottom = -81.9999
+custom_fonts/font = ExtResource( 8 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "+00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Data/Healing"]
+anims/HealingAnimation = SubResource( 24 )
+
 [node name="Ammo" type="Label" parent="HUD/Data"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -223.0
+margin_left = -292.0
 margin_top = -76.0
+margin_right = -15.0
 custom_fonts/font = ExtResource( 8 )
 text = "20/100"
-align = 1
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChargeBar" type="ProgressBar" parent="HUD/Data"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -329.5
+margin_top = 9.0
+margin_right = 329.5
+margin_bottom = 41.0
+value = 100.0
+rounded = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
