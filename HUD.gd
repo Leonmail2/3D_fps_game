@@ -40,31 +40,18 @@ func update_ammo(new_ammo,new_clip,new_low):
 		$Data/Ammo.set("custom_colors/font_color",Color(1, 0, 0))
 
 func _modulate_blood(setting,frequency,func_offset):
-	if setting == true:
-		$Data/Blood.material.set_shader_param("flashing",1)
-		$Data/Blood.material.set_shader_param("frequency",float(frequency))
-		$Data/Blood.material.set_shader_param("offset",float(func_offset))
-	else:
-		$Data/Blood.material.set_shader_param("flashing",0)
+#	if setting == true:
+#		$Data/Blood.material.set_shader_param("flashing",1)
+#		$Data/Blood.material.set_shader_param("frequency",float(frequency))
+#		$Data/Blood.material.set_shader_param("offset",float(func_offset))
+#	else:
+#		$Data/Blood.material.set_shader_param("flashing",0)
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	blood_flash = clamp(blood_flash - (70*delta),0,100)
-	$Data/Blood.material.set_shader_param("flash",float(blood_flash))
-		 
+	pass
 	
-
-func flash_blood():
-	blood_flash = 100
-
-
-func _on_Player_player_just_damaged(health):
-	update_health(health)
-	flash_blood()
-
-func _on_Player_player_health_changed(health):
-	update_health(health)
-
 
 func _on_GunManager_ammo_change(ammo,clip,new_low):
 	update_ammo(ammo,clip,new_low)

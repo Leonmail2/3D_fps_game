@@ -70,6 +70,9 @@ func shootPistol():
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().get_parent().hit(34,-get_node("../PlayerCamera").global_transform.basis.z*10)
 			$Timers/HitSoundDelay.start(0.11)
+	
+	if(pistol_clip == 0):
+		$Gun/NoAmmo.play()
 
 func shootShotgun():
 	var target = $RayCast.get_collider()

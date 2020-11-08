@@ -52,9 +52,7 @@ data = PoolVector3Array( -24.6666, -31.2105, 70.7447, -24.6666, -32.4626, 85.744
 script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -35.0295, 18.3002, 126.156 )
-health = 1085
-MAX_HEALTH = 1168
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -31.4313, -54.5386, 76.9294 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
@@ -67,7 +65,7 @@ environment = SubResource( 2 )
 navmesh = SubResource( 3 )
 
 [node name="Cube" type="MeshInstance" parent="Level01/Navigation/NavMesh"]
-transform = Transform( 1.97777, 0, 0, 0, 1.97777, 0, 0, 0, 1.97777, -0.0143051, 0.108223, 0.000526428 )
+transform = Transform( 1.97777, 0, 0, 0, 1.97777, 0, 0, 0, 1.97777, -0.263803, -1.03723, 0.000646591 )
 use_in_baked_light = true
 mesh = SubResource( 4 )
 material/0 = null

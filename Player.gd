@@ -10,7 +10,7 @@ export var PLAYER_SPEED = 25;
 export var MAX_SPEED = 9999;
 export var ACCELERATION = 8;
 export var DEACCELERATION = 10;
-export var gravity = -50
+export var gravity = -60
 export var mouse_sensitivity = 0.001;
 
 var air_time = 0
@@ -22,6 +22,7 @@ var charge_target = null
 var charging = false
 var charge_cooldown = 100
 
+
 func die():
 	health = 0
 	$Head/DeathCamera.current = true
@@ -29,15 +30,19 @@ func die():
 
 func hit(damage):
 	health = clamp(health - damage,0.0,MAX_HEALTH)
-	print(health)
 	$Head/Camera/GunManager.health = health
-	emit_signal("player_just_damaged",health)
+	get_node("HUD/Data/Health").text = str(health) #update health being damaged
+	get_node("HUD/Data/Blood/AnimationPlayer").play("BloodSplatter") # damage vfx
 
 func heal(hp):
 	health = clamp(health+hp,0.0,MAX_HEALTH)
 	print(health)
 	$Head/Camera/GunManager.health = health
-	emit_signal("player_health_changed",health)
+	get_node("HUD/Data/Health").text = str(health)
+	get_node("HUD/Data/Heal/AnimationPlayer").play("Heal") # healing vfx
+	
+	get_node("HUD/Data/Healing").text = "+" + str(hp)
+	get_node("HUD/Data/Healing/AnimationPlayer").play("HealingAnimation") # healing health numbers vfx
 
 func check_health():
 	health = clamp(health,0,MAX_HEALTH)
