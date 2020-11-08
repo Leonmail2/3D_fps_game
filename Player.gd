@@ -1,6 +1,17 @@
 extends KinematicBody
 signal player_health_changed
 signal player_just_damaged
+
+enum {
+	IDLE = 0,
+	ALERT = 1,
+	SHOOTING = 2,
+	SEARCHING_COVER = 3,
+	IN_COVER = 4,
+	SHOOTING_COVER = 5,
+}
+
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -28,10 +39,11 @@ func die():
 	
 
 func hit(damage):
-	health = clamp(health - damage,0.0,MAX_HEALTH)
-	print(health)
-	$Head/Camera/GunManager.health = health
-	emit_signal("player_just_damaged",health)
+	if charging == false:
+		health = clamp(health - damage,0.0,MAX_HEALTH)
+		print(health)
+		$Head/Camera/GunManager.health = health
+		emit_signal("player_just_damaged",health)
 
 func heal(hp):
 	health = clamp(health+hp,0.0,MAX_HEALTH)
@@ -88,16 +100,17 @@ func _physics_process(delta):
 		if Input.is_key_pressed(KEY_Q) and charge_cooldown == 100:
 			var cast = $Head/Camera/GunManager/RayCast.get_collider()
 			if cast != null and cast.name == "EnemyHitDetector":
-				$Head/Camera/GunManager.guns_enabled = false
-				$ChargeTimer.start()
-				charge_target = cast.get_parent().get_parent()
-				charging = true
-				charge_cooldown = 0
+				charge_target = cast.get_node("../..")
+				if charge_target.state != IN_COVER or charge_target.state != SHOOTING_COVER:
+					$Head/Camera/GunManager.guns_enabled = false
+					$ChargeTimer.start()
+					charging = true
+					charge_cooldown = 0
 		if charging == true:
-			$Head/Camera.look_at(charge_target.global_transform.origin,Vector3.UP)
+			$Head/Camera.look_at(charge_target.get_node("EnemyElements/HeadLoc").global_transform.origin,Vector3.UP)
 			$Head/Camera.rotate_object_local(Vector3(0,1,0), PI)
-			transform = transform.interpolate_with(charge_target.global_transform,6*delta)
-			if (charge_target.global_transform.origin - global_transform.origin).length() < 10:
+			transform = transform.interpolate_with(charge_target.global_transform,4*delta)
+			if (charge_target.global_transform.origin - global_transform.origin).length() < 8:
 				charge_target.hit(3000,$Head/Camera.global_transform.basis.z * 50)
 				charging = false
 				charge_target = null

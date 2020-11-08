@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/NoAmmoGunClicks.wav-a5e666214af17e1f7c156c74ffec5982.sample"
+
+[deps]
+
+source_file="res://Audio/NoAmmoGunClicks.wav"
+dest_files=[ "res://.import/NoAmmoGunClicks.wav-a5e666214af17e1f7c156c74ffec5982.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

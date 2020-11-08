@@ -1,20 +1,22 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Gun.gd" type="Script" id=2]
-[ext_resource path="res://Assets/hit.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/9_mm_gunshot-mike-koenig-123.wav" type="AudioStream" id=3]
 [ext_resource path="res://HUD.gd" type="Script" id=4]
 [ext_resource path="res://Sprite.gd" type="Script" id=5]
 [ext_resource path="res://crosshair.png" type="Texture" id=6]
 [ext_resource path="res://Assets/blood.png" type="Texture" id=7]
 [ext_resource path="res://Assets/font.tres" type="DynamicFont" id=8]
-[ext_resource path="res://Assets/9_mm_gunshot-mike-koenig-123.wav" type="AudioStream" id=9]
-[ext_resource path="res://Assets/reload.wav" type="AudioStream" id=10]
+[ext_resource path="res://Audio/reload.wav" type="AudioStream" id=9]
+[ext_resource path="res://Audio/shotgun_fire.wav" type="AudioStream" id=10]
 [ext_resource path="res://Assets/Wood.material" type="Material" id=11]
 [ext_resource path="res://GunManager.gd" type="Script" id=12]
 [ext_resource path="res://Assets/Gun body.material" type="Material" id=13]
 [ext_resource path="res://Assets/Aim Down Sights.material" type="Material" id=14]
-[ext_resource path="res://Assets/shotgun_fire.wav" type="AudioStream" id=15]
+[ext_resource path="res://Audio/hit.wav" type="AudioStream" id=15]
+[ext_resource path="res://Assets/knife.glb" type="PackedScene" id=16]
+[ext_resource path="res://Audio/NoAmmoGunClicks.wav" type="AudioStream" id=17]
 
 [sub_resource type="ArrayMesh" id=1]
 surfaces/0 = {
@@ -276,7 +278,7 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.44836
 script = ExtResource( 2 )
 
 [node name="Gun2" type="MeshInstance" parent="Head/Camera/GunManager/Gun"]
-transform = Transform( 4.96726, -0.000693269, -0.0344409, 0.0344181, -0.106438, 4.96612, -0.00143108, -4.96624, -0.106431, 4.21386e-07, -0.0084965, -0.00301148 )
+transform = Transform( 4.96738, 0, 0, 0, 0, 4.96738, 0, -4.96738, 0, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 material/1 = null
@@ -287,16 +289,19 @@ anims/Gun|Reload = SubResource( 3 )
 anims/Gun|WalkCycle = SubResource( 4 )
 
 [node name="Hit" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
-stream = ExtResource( 3 )
+stream = ExtResource( 15 )
 volume_db = 3.718
 
 [node name="Shot" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
-stream = ExtResource( 9 )
+stream = ExtResource( 3 )
 volume_db = -6.892
 
 [node name="Reload" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
-stream = ExtResource( 10 )
+stream = ExtResource( 9 )
 volume_db = -4.902
+
+[node name="NoAmmo" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
+stream = ExtResource( 17 )
 
 [node name="ShellParticles" type="Particles" parent="Head/Camera/GunManager/Gun"]
 transform = Transform( -2.78664e-09, 1.11376e-11, 0.0637506, -0.000254798, 0.0637501, -2.22751e-11, -0.0637501, -0.000254798, -2.78658e-09, -0.119224, 0.0910806, -0.00171429 )
@@ -342,15 +347,21 @@ anims/Shotgun|ShotgunWalk = SubResource( 16 )
 anims/Shotgun|WalkCycle = SubResource( 17 )
 
 [node name="Hit" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
-stream = ExtResource( 3 )
+stream = ExtResource( 15 )
 
 [node name="Shot" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
-stream = ExtResource( 15 )
+stream = ExtResource( 10 )
 volume_db = -1.489
 
 [node name="Reload" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
-stream = ExtResource( 10 )
+stream = ExtResource( 9 )
 volume_db = -4.902
+
+[node name="NoAmmo" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
+stream = ExtResource( 17 )
+
+[node name="knife" parent="Head/Camera/GunManager" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.40848, 0, 1.19215 )
 
 [node name="Timers" type="Node" parent="Head/Camera/GunManager"]
 
@@ -412,8 +423,9 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -329.5
+margin_top = 9.0
 margin_right = 329.5
-margin_bottom = 41.0
+margin_bottom = 51.0
 value = 100.0
 rounded = true
 __meta__ = {
@@ -437,6 +449,7 @@ __meta__ = {
 anchor_top = 1.0
 anchor_right = 0.015
 anchor_bottom = 1.0
+margin_left = 15.0
 margin_top = -76.0
 margin_right = 103.0
 custom_fonts/font = ExtResource( 8 )
@@ -455,6 +468,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -223.0
 margin_top = -76.0
+margin_right = -15.0
 custom_fonts/font = ExtResource( 8 )
 text = "20/100"
 align = 1
