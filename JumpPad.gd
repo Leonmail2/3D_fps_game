@@ -20,3 +20,4 @@ func _ready():
 func _on_Area_area_entered(area):
 	if area.name == "PlayerCollider":
 		area.get_node("..").velocity = $Position3D.transform.basis.x * 80
+		$SpringSoundSFX.play()

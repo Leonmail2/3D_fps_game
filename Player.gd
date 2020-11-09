@@ -45,16 +45,24 @@ func hit(damage):
 		print(health)
 		$Head/Camera/GunManager.health = health
 		emit_signal("player_just_damaged",health)
+		$HUD/AnimationPlayer.seek(0, true)
+		$HUD/AnimationPlayer.play("PlayerScreenBlood")
+
 
 func heal(hp):
-	health = clamp(health+hp,0.0,MAX_HEALTH)
-	print(health)
-	$Head/Camera/GunManager.health = health
-	get_node("HUD/Data/Health").text = str(health)
-	get_node("HUD/Data/Heal/AnimationPlayer").play("Heal") # healing vfx
-	
-	get_node("HUD/Data/Healing").text = "+" + str(hp)
-	get_node("HUD/Data/Healing/AnimationPlayer").play("HealingAnimation") # healing health numbers vfx
+	if(health < 100):
+		health = clamp(health+hp,0.0,MAX_HEALTH)
+		print(health)
+		$Head/Camera/GunManager.health = health
+	#	get_node("HUD/Data/Health").text = str(health)
+		$HUD/AnimationPlayer.seek(0, true)
+		$HUD/AnimationPlayer.play("PlayerScreenHeal")
+	#
+	#	get_node("HUD/Data/Healing").text = "+" + str(hp)
+	#	get_node("HUD/Data/Healing/AnimationPlayer").play("HealingAnimation") # healing health numbers vfx
+		return true
+	else:
+		return false
 
 func check_health():
 	health = clamp(health,0,MAX_HEALTH)

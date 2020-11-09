@@ -120,5 +120,17 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.9438
 [node name="HealthPack2" parent="Level01/Health" instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.94382, -59.1941, 37.9176 )
 
+[node name="HealthPack3" parent="Level01/Health" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.2547, -59.1941, 24.4195 )
+
+[node name="HealthPack4" parent="Level01/Health" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.2547, -59.1941, 37.9176 )
+
+[node name="HealthPack5" parent="Level01/Health" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.3898, -59.1941, 17.4537 )
+
+[node name="HealthPack6" parent="Level01/Health" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.3898, -59.1941, 30.9518 )
+
 [node name="JumpPad" parent="Level01" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.9104, -61.5738, 23.8222 )

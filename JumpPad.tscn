@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://JumpPad.gd" type="Script" id=1]
 [ext_resource path="res://Assets/orange.jpg" type="Texture" id=2]
 [ext_resource path="res://Assets/small.jpg" type="Texture" id=3]
+[ext_resource path="res://Audio/FreeSound_Spring.wav" type="AudioStream" id=4]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 2 )
@@ -12,12 +13,12 @@ uv1_scale = Vector3( 5, 2, 5 )
 material = SubResource( 1 )
 size = Vector3( 7, 1, 5 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 4, 4, 1 )
 
-[sub_resource type="PrismMesh" id=3]
-material = SubResource( 4 )
+[sub_resource type="PrismMesh" id=4]
+material = SubResource( 3 )
 size = Vector3( 3.429, 4.775, 0.615 )
 
 [sub_resource type="BoxShape" id=5]
@@ -35,7 +36,7 @@ material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
 transform = Transform( -4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0.169114, 0.422435, 0 )
-mesh = SubResource( 3 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Area" type="Area" parent="."]
@@ -54,4 +55,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5612, 0, 0 )
 visible = false
 mesh = SubResource( 6 )
 material/0 = null
+
+[node name="SpringSoundSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
 [connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]

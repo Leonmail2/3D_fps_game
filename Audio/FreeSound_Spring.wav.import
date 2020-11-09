@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FreeSound_Spring.wav-0f47c084070b7067c9f79f01e4042ca2.sample"
+
+[deps]
+
+source_file="res://Audio/FreeSound_Spring.wav"
+dest_files=[ "res://.import/FreeSound_Spring.wav-0f47c084070b7067c9f79f01e4042ca2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

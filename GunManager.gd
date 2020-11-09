@@ -62,6 +62,7 @@ func _on_HitSoundDelay_timeout():
 	$Gun/Hit.play()
 
 func shootPistol():
+	print("Pistol Shooting")
 	var target = $RayCast.get_collider()
 	if(can_shoot == true and pistol_clip > 0):
 		animationHandler("Cooldown")
@@ -126,8 +127,8 @@ func animationHandler(anim):
 			elif anim == "Cooldown":
 				$Timers/PistolTimer.start(pistol_cooldown_length)
 				can_shoot = false
-				anim_state = "Reloading"
-				$Gun/AnimationPlayer.play("Gun|Reload",-2,-3,true)
+				anim_state = "Shooting"
+				$Gun/AnimationPlayer.play("Gun|Fire")
 				$Gun/MuzzleParticles.emitting = true
 				$Gun/ShellParticles.emitting = true
 			elif anim == "Reload":

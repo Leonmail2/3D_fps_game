@@ -13,11 +13,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	rotate_y(0.7*PI*delta)
-	transform = transform.orthonormalized()
+#	rotate_y(0.7*PI*delta)
+#	transform = transform.orthonormalized()
+	$AnimationPlayer.play("HealthHover")
+	pass
 
 
 func _on_Area_area_entered(area):
 	if area.get_parent().has_method("heal"):
-		area.get_parent().heal(health_bonus)
-		queue_free()
+		if(area.get_parent().heal(health_bonus)):
+			queue_free()
