@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Gun.gd" type="Script" id=2]
@@ -236,6 +236,14 @@ surfaces/2 = {
 "vertex_count": 24
 }
 
+[sub_resource type="SpatialMaterial" id=29]
+albedo_color = Color( 1, 0, 0, 1 )
+emission_enabled = true
+emission = Color( 1, 0, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
 [sub_resource type="Animation" id=17]
 length = 7.33333
 tracks/0/type = "transform"
@@ -434,7 +442,7 @@ transform = Transform( 99.9968, 0, -0.801906, 0.801906, 0, 99.9968, 4.54747e-13,
 mesh = SubResource( 16 )
 material/0 = null
 material/1 = null
-material/2 = null
+material/2 = SubResource( 29 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Head/Camera/GunManager/Shotgun"]
 anims/Shotgun|Idle = SubResource( 17 )

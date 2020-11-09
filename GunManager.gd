@@ -71,6 +71,7 @@ func shootPistol():
 		if(target != null and target.name == "EnemyHitDetector"):
 			target.get_parent_spatial().get_parent().hit(34,-get_node("../PlayerCamera").global_transform.basis.z*10)
 			$Timers/HitSoundDelay.start(0.11)
+			$"../../../".charge_cooldown += 10
 	elif pistol_clip == 0:
 		if $Gun/NoAmmo.playing == false and can_shoot == true:
 			$Gun/NoAmmo.play()
@@ -84,6 +85,7 @@ func shootShotgun():
 		$Shotgun/Shot.play()
 		$"../../../".velocity += $"../".global_transform.basis.z * -45
 		if(target != null and target.name == "EnemyHitDetector"):
+			$"../../../".charge_cooldown += 20
 			target.get_parent_spatial().get_parent().hit(100,-get_node("../PlayerCamera").global_transform.basis.z*28)
 			$Timers/HitSoundDelay.start(0.15)
 	elif shotgun_clip == 0:
