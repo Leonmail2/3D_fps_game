@@ -170,7 +170,7 @@ func showWeapon(weapon):
 		$Shotgun.show()
 
 func switchWeapons(new_weapon):
-	if reloading == false and anim_state == "" and transitioning_between_weapons == false and new_weapon != current_weapon:
+	if reloading == false and anim_state == "" and transitioning_between_weapons == false:
 		if new_weapon == "Pistol":
 			hideWeapon(current_weapon)
 			$Gun.transform.origin.y = get_node("../EquipPos").transform.origin.y

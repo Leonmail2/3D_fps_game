@@ -118,10 +118,13 @@ func _physics_process(delta):
 				charge_target = null
 				charging = false
 				
+				
 
 func _knife_callback():
 	$Head/Camera/Knife.hide()
 	$Head/Camera/GunManager.guns_enabled = true
+	$Head/Camera/GunManager.switchWeapons($Head/Camera/GunManager.current_weapon)
+	
 
 func _on_ChargeTimer_timeout():
 	$Head/Camera/GunManager.guns_enabled = true
