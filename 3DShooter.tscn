@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://JumpPad.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/photo-1531147646552-1eec68116469.jpg" type="Texture" id=7]
 [ext_resource path="res://Assets/Material.material" type="Material" id=8]
+[ext_resource path="res://PistolAmmo.tscn" type="PackedScene" id=9]
 
 [sub_resource type="PanoramaSky" id=1]
 radiance_size = 5
@@ -55,6 +56,7 @@ script = ExtResource( 3 )
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -35.0295, 18.3002, 126.156 )
 health = 1085
 MAX_HEALTH = 1168
+PLAYER_SPEED = 30
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
@@ -116,8 +118,8 @@ directional_shadow_max_distance = 351.4
 
 [node name="Health" type="Spatial" parent="Level01"]
 
-[node name="HealthPack" parent="Level01/Health" instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.94382, -59.1941, 24.4195 )
+[node name="PistolAmmo" parent="Level01/Health" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.64873, -58.9394, 15.2456 )
 
 [node name="HealthPack2" parent="Level01/Health" instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.94382, -59.1941, 37.9176 )

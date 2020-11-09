@@ -51,6 +51,12 @@ func heal(hp):
 	$Head/Camera/GunManager.health = health
 	emit_signal("player_health_changed",health)
 
+func get_ammo(type,amount):
+	if type == "Pistol":
+		$Head/Camera/GunManager.get_ammo("Pistol",amount)
+	elif type == "Shotgun":
+		$Head/Camera/GunManager.get_ammo("Shotgun",amount)
+
 func check_health():
 	health = clamp(health,0,MAX_HEALTH)
 	if health == 0:
@@ -113,8 +119,8 @@ func _physics_process(delta):
 			$Head/Camera.rotate_object_local(Vector3(0,1,0), PI)
 			transform = transform.interpolate_with(charge_target.global_transform,4*delta)
 			if (charge_target.global_transform.origin - global_transform.origin).length() < 8:
-				$Head/Camera/Knife/AnimationPlayer.play("Cube|Slice",-1,4)
 				charge_target.hit(3000,$Head/Camera.global_transform.basis.z * 50)
+				$Head/Camera/Knife/AnimationPlayer.play("Cube|Slice",-1,4)
 				charge_target = null
 				charging = false
 				

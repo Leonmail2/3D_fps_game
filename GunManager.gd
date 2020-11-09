@@ -33,7 +33,7 @@ const pistol_cooldown_length = 0.4
 const pistol_reload_length = 1
 const pistol_equip_length = 1
 
-var shotgun_clip = 3
+var shotgun_clip = 2
 export var shotgun_low_ammo = 1
 export var max_shotgun_clip = 3
 export var shotgun_ammo = 50
@@ -117,6 +117,14 @@ func _on_PistolReloadTimer_timeout():
 
 func _on_ShotgunReload_timeout():
 	reloading = false
+
+func get_ammo(type,amount):
+	if type == "Pistol":
+		pistol_ammo += amount
+		updateAmmoHud()
+	elif type == "Shotgun":
+		shotgun_ammo += amount
+		updateAmmoHud()
 
 func animationHandler(anim):
 	if anim_state == "":

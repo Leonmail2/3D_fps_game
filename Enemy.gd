@@ -21,7 +21,7 @@ onready var cover = get_node(cover_node_loc)
 
 export var enemy_type = "Dummy"
 export var health = 100
-export var speed = 10
+export var speed = 14
 
 var path = []
 var path_node = 0

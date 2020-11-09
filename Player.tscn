@@ -361,6 +361,9 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0
 script = ExtResource( 12 )
 pistol_ammo = 127
 max_pistol_ammo = 127
+max_shotgun_clip = 2
+shotgun_ammo = 20
+max_shotgun_ammo = 20
 
 [node name="RayCast" type="RayCast" parent="Head/Camera/GunManager"]
 transform = Transform( -1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0, 0 )
