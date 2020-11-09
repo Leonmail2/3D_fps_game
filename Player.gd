@@ -72,6 +72,7 @@ func get_movement_input():
 
 func _ready():
 	emit_signal("player_health_changed",health)
+	$Head/Camera/Knife.hide()
 
 func _physics_process(delta):
 	check_health()
@@ -102,6 +103,7 @@ func _physics_process(delta):
 			if cast != null and cast.name == "EnemyHitDetector":
 				charge_target = cast.get_node("../..")
 				if charge_target.state != IN_COVER or charge_target.state != SHOOTING_COVER:
+					$Head/Camera/Knife.show()
 					$Head/Camera/GunManager.guns_enabled = false
 					$ChargeTimer.start()
 					charging = true
@@ -111,15 +113,21 @@ func _physics_process(delta):
 			$Head/Camera.rotate_object_local(Vector3(0,1,0), PI)
 			transform = transform.interpolate_with(charge_target.global_transform,4*delta)
 			if (charge_target.global_transform.origin - global_transform.origin).length() < 8:
+				$Head/Camera/Knife/AnimationPlayer.play("Cube|Slice",-1,4)
 				charge_target.hit(3000,$Head/Camera.global_transform.basis.z * 50)
-				charging = false
 				charge_target = null
-				$Head/Camera/GunManager.guns_enabled = true
+				charging = false
+				
+
+func _knife_callback():
+	$Head/Camera/Knife.hide()
+	$Head/Camera/GunManager.guns_enabled = true
 
 func _on_ChargeTimer_timeout():
 	$Head/Camera/GunManager.guns_enabled = true
 	charging = false
 	charge_target = null
+	$Head/Camera/Knife.hide()
 	velocity = Vector3()
 
 func _input(event): 
