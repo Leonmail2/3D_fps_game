@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Gun.gd" type="Script" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://Assets/Blade.material" type="Material" id=16]
 [ext_resource path="res://Audio/NoAmmoGunClicks.wav" type="AudioStream" id=17]
 [ext_resource path="res://Assets/Handle.material" type="Material" id=18]
+[ext_resource path="res://Assets/Fonts/Square.ttf" type="DynamicFontData" id=19]
 
 [sub_resource type="ArrayMesh" id=1]
 surfaces/0 = {
@@ -312,6 +313,10 @@ extents = Vector3( 1, 1, 0.188337 )
 radius = 1.32258
 height = 2.19577
 
+[sub_resource type="DynamicFont" id=30]
+size = 30
+font_data = ExtResource( 19 )
+
 [sub_resource type="Shader" id=26]
 code = "shader_type canvas_item;
 uniform float frequency = 10;
@@ -397,17 +402,21 @@ anims/Gun|WalkCycle = SubResource( 9 )
 [node name="Hit" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 15 )
 volume_db = 3.718
+bus = "Effects"
 
 [node name="Shot" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 3 )
 volume_db = -6.892
+bus = "Effects"
 
 [node name="Reload" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 9 )
 volume_db = -4.902
+bus = "Effects"
 
 [node name="NoAmmo" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Gun"]
 stream = ExtResource( 17 )
+bus = "Effects"
 
 [node name="ShellParticles" type="Particles" parent="Head/Camera/GunManager/Gun"]
 transform = Transform( -2.78664e-09, 1.11376e-11, 0.0637506, -0.000254798, 0.0637501, -2.22751e-11, -0.0637501, -0.000254798, -2.78658e-09, -0.119224, 0.0910806, -0.00171429 )
@@ -454,17 +463,21 @@ anims/Shotgun|WalkCycle = SubResource( 22 )
 
 [node name="Hit" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
 stream = ExtResource( 15 )
+bus = "Effects"
 
 [node name="Shot" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
 stream = ExtResource( 10 )
 volume_db = -1.489
+bus = "Effects"
 
 [node name="Reload" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
 stream = ExtResource( 9 )
 volume_db = -4.902
+bus = "Effects"
 
 [node name="NoAmmo" type="AudioStreamPlayer" parent="Head/Camera/GunManager/Shotgun"]
 stream = ExtResource( 17 )
+bus = "Effects"
 
 [node name="Timers" type="Node" parent="Head/Camera/GunManager"]
 
@@ -539,6 +552,7 @@ margin_left = -329.5
 margin_top = 9.0
 margin_right = 329.5
 margin_bottom = 51.0
+custom_fonts/font = SubResource( 30 )
 value = 100.0
 rounded = true
 __meta__ = {

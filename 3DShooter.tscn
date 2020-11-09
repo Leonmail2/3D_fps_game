@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Assets/Material.material" type="Material" id=8]
 [ext_resource path="res://PistolAmmo.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ShotgunAmmo.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Audio/Arcade-Fantasy.wav" type="AudioStream" id=11]
+[ext_resource path="res://Soundtrack.gd" type="Script" id=12]
 
 [sub_resource type="PanoramaSky" id=1]
 radiance_size = 5
@@ -131,3 +133,13 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.9438
 
 [node name="JumpPad" parent="Level01" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.9104, -61.5738, 23.8222 )
+
+[node name="Soundtrack" type="Node" parent="Level01"]
+script = ExtResource( 12 )
+
+[node name="Soundtrack" type="AudioStreamPlayer" parent="Level01/Soundtrack"]
+stream = ExtResource( 11 )
+volume_db = -13.126
+autoplay = true
+bus = "Music"
+[connection signal="finished" from="Level01/Soundtrack/Soundtrack" to="Level01/Soundtrack" method="_on_Soundtrack_finished"]
