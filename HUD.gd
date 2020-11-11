@@ -8,7 +8,8 @@ var blood_opacity = 0
 export var blood_modulation_frequency = 2
 var blood_modulate = true
 var blood_flash = 0
-
+onready var healthdisp = $Data/Stats/Health
+onready var ammodisp = $Data/Stats/Ammo
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -17,27 +18,27 @@ func update_charge_bar(charge):
 	$Data/ChargeBar.value = charge
 
 func update_health(health):
-	$Data/Health.text = str(health)
+	healthdisp.text = str(health)
 	if health > 40:
 		_modulate_blood(false,3,0.4)
-		$Data/Health.set("custom_colors/font_color",Color(1, 1, 1))
+		healthdisp.set("custom_colors/font_color",Color(1, 1, 1))
 	if health <= 40 and health > 15:
 		_modulate_blood(true,3,0.4)
-		$Data/Health.set("custom_colors/font_color",Color(1, 0, 0))
+		healthdisp.set("custom_colors/font_color",Color(1, 0, 0))
 	if health < 15 and health > 1:
 		_modulate_blood(true,12,0.65)
-		$Data/Health.set("custom_colors/font_color",Color(1, 0, 0))
+		healthdisp.set("custom_colors/font_color",Color(1, 0, 0))
 	if health == 0:
 		_modulate_blood(true,1,0.65)
-		$Data/Health.set("custom_colors/font_color",Color(1, 0, 0))
+		healthdisp.set("custom_colors/font_color",Color(1, 0, 0))
 
 
 func update_ammo(new_ammo,new_clip,new_low):
-	$Data/Ammo.text = str(str(new_clip)+"/"+str(new_ammo))
+	$Data/Stats/Ammo.text = str(str(new_clip)+"/"+str(new_ammo))
 	if new_clip > new_low:
-		$Data/Ammo.set("custom_colors/font_color",Color(1, 1, 1))
+		$Data/Stats/Ammo.set("custom_colors/font_color",Color(1, 1, 1))
 	else:
-		$Data/Ammo.set("custom_colors/font_color",Color(1, 0, 0))
+		$Data/Stats/Ammo.set("custom_colors/font_color",Color(1, 0, 0))
 
 func _modulate_blood(setting,frequency,func_offset):
 	if setting == true:

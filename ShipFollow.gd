@@ -5,7 +5,7 @@ extends PathFollow
 # var a = 2
 # var b = "text"
 export var starting_offset = 872
-export var speed = 30
+export var speed = 120
 var moving = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():

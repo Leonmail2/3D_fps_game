@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Gun.gd" type="Script" id=2]
@@ -341,7 +341,13 @@ shader_param/amplitude = 0.2
 shader_param/flashing = 0.0
 shader_param/flash = 0.0
 
-[sub_resource type="CapsuleMesh" id=30]
+[sub_resource type="DynamicFont" id=30]
+size = 30
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 19 )
+
+[sub_resource type="CapsuleMesh" id=31]
 mid_height = 2.121
 
 [node name="Player" type="KinematicBody"]
@@ -572,13 +578,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Health" type="Label" parent="HUD/Data"]
+[node name="Stats" type="Control" parent="HUD/Data"]
 anchor_top = 1.0
-anchor_right = 0.015
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 15.0
+margin_top = -108.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="HUD/Data/Stats"]
+anchor_top = 1.0
+anchor_bottom = 1.0
 margin_top = -76.0
-margin_right = 103.0
+margin_right = 130.465
 custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "100"
@@ -588,20 +601,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Ammo" type="Label" parent="HUD/Data"]
+[node name="Ammo" type="Label" parent="HUD/Data/Stats"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -223.0
 margin_top = -76.0
-margin_right = -15.0
 custom_fonts/font = ExtResource( 8 )
 text = "20/100"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CenterContainer" type="CenterContainer" parent="HUD/Data"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="HUD/Data/CenterContainer"]
+margin_left = 796.0
+margin_top = 704.0
+margin_right = 1075.06
+margin_bottom = 476.0
+custom_fonts/font = SubResource( 30 )
+text = "Press E to Interact"
+align = 1
 
 [node name="Sprite" type="Sprite" parent="HUD"]
 position = Vector2( 971.769, 493.689 )
@@ -612,7 +637,7 @@ script = ExtResource( 5 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 visible = false
-mesh = SubResource( 30 )
+mesh = SubResource( 31 )
 material/0 = null
 
 [node name="ChargeTimer" type="Timer" parent="."]

@@ -19,7 +19,10 @@ func shoot():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#$Arm2/Cylinder2/Sphere2.look_at(player.global_transform.origin,Vector3.UP)
-	pass
+		var q_from = $Arm2/Cylinder2/Sphere2.global_transform.basis.get_rotation_quat()
+		var q_to = Transform().looking_at(player.global_transform.origin, Vector3.UP).basis.get_rotation_quat()
+		# Interpolate current rotation with desired one.
+		$Arm2/Cylinder2/Sphere2.global_transform.basis = Basis(q_from.slerp(q_to, delta * 0.2))
 
 func _on_ShootTimer_timeout():
-	#shoot()
+	shoot()
